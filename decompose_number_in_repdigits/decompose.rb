@@ -11,14 +11,23 @@ class Decomposer
     crt_value = n
 
     while crt_value != 0
-      term = closest_repdigit(crt_value.abs)*(0<=>crt_value)
+      term = closest_repdigit(crt_value.abs)*(crt_value<=>0)
       terms << term
-      crt_value += term
+      crt_value -= term
     end
     terms
   end
 
   def self.print_decomposition n
+    length = n.to_s.size
+
+    puts" #{n}"
+
+    decompose(n).each{|t|
+      sgn = t==decompose(n).first ? '=' : '++-'[t<=>0]
+      puts "#{sgn}#{t.abs}".rjust(length+1)
+      # puts ""      t.to_s.rjust(length+1)
+    }
 
   end
 end
@@ -31,13 +40,27 @@ RSpec.describe Decomposer do
   end
 
   describe '#decompose' do
-    it { expect(Decomposer.decompose(7)).to eql [-7] }
-    it { expect(Decomposer.decompose(24192)).to eql [-22222, -1111, -888, +22, +7] }
-    it { expect(Decomposer.decompose(113)).to eql [-111, -2] }
+    it { expect(Decomposer.decompose(7)).to eql [7] }
+    it { expect(Decomposer.decompose(24192)).to eql [22222, 1111, 888, -22, -7] }
+    it { expect(Decomposer.decompose(113)).to eql [111, 2] }
   end
 
   describe '#print_decomposition' do
-    it { expect(Decomposer.decompose(24192)).to eql [-22222, -1111, -888, +22, +7] }
-    it { expect(Decomposer.decompose(113)).to eql [-111, -2] }
+
+    it { 
+      out = capture_stdout do
+        Decomposer.print_decomposition 24192
+      end
+
+      expect(out.string).to eql <<-EOS
+ 24192
+=22222
+ +1111
+  +888
+   -22
+    -7
+EOS
+    }
+    # it { expect(Decomposer.decompose(113)).to eql [-111, -2] }
   end
 end
