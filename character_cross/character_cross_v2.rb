@@ -1,4 +1,5 @@
 require 'rspec/autorun'
+require 'stringio'
 
 # Trying to write the string string.length times 
 # and then space out the non-diagonal chars
@@ -15,12 +16,7 @@ def character_cross word
 end
 
 #Golfed:
-f=->a{
-  length = a.size
-  (0...length).map{|line|
-    a.chars.map.with_index{|c,i| get_diagonal_indices(length, line).member?(i) ? c : ' ' }.join ' '
-  }.join ?\n
-}
+f=->a{(0...l=a.size).map{|i|puts a.chars.map.with_index{|c,j|[i,l-i-1].member?(j)?c:' '}.join' '}}
 
 RSpec.describe '#get_unmasked_char_indices' do
   let(:str_length) { 7 }
@@ -45,7 +41,7 @@ RSpec.describe '#get_unmasked_char_indices' do
   end
 end
 
-TARGET = <<-EOS.chomp
+TARGET = <<-EOS
 P           M
   R       A  
     O   R    
@@ -56,11 +52,28 @@ P           M
 EOS
 
 RSpec.describe '#character_cross' do
-  it { expect(character_cross('PROGRAM')).to eql TARGET }
+  it { expect(character_cross('PROGRAM')).to eql TARGET.chomp }
+end
+
+module Kernel
+  def capture_stdout
+    out = StringIO.new
+    $stdout = out
+    yield
+    return out
+  ensure
+    $stdout = STDOUT
+  end 
 end
 
 RSpec.describe 'golfed implementation' do
-  it { expect(f['PROGRAM']).to eql TARGET }
+  let(:console_out) { StringIO.new }
+  before { out = console_out }
+  
+  it 'prints correct output' do
+    out = capture_stdout{ f['PROGRAM'] }
+    expect(out.string).to eql TARGET 
+  end
 end
 
 
