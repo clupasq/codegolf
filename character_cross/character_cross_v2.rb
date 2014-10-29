@@ -1,5 +1,7 @@
 require 'rspec/autorun'
+require_relative '../test_utils'
 require 'stringio'
+
 
 # Trying to write the string string.length times 
 # and then space out the non-diagonal chars
@@ -53,17 +55,6 @@ EOS
 
 RSpec.describe '#character_cross' do
   it { expect(character_cross('PROGRAM')).to eql TARGET.chomp }
-end
-
-module Kernel
-  def capture_stdout
-    out = StringIO.new
-    $stdout = out
-    yield
-    return out
-  ensure
-    $stdout = STDOUT
-  end 
 end
 
 RSpec.describe 'golfed implementation' do

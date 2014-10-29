@@ -1,4 +1,5 @@
 require 'rspec/autorun'
+require_relative '../test_utils'
 
 class Decomposer
   def self.closest_repdigit n
@@ -16,6 +17,10 @@ class Decomposer
     end
     terms
   end
+
+  def self.print_decomposition n
+
+  end
 end
 
 RSpec.describe Decomposer do
@@ -27,6 +32,11 @@ RSpec.describe Decomposer do
 
   describe '#decompose' do
     it { expect(Decomposer.decompose(7)).to eql [-7] }
+    it { expect(Decomposer.decompose(24192)).to eql [-22222, -1111, -888, +22, +7] }
+    it { expect(Decomposer.decompose(113)).to eql [-111, -2] }
+  end
+
+  describe '#print_decomposition' do
     it { expect(Decomposer.decompose(24192)).to eql [-22222, -1111, -888, +22, +7] }
     it { expect(Decomposer.decompose(113)).to eql [-111, -2] }
   end
