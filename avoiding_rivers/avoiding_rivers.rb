@@ -1,4 +1,5 @@
 require 'rspec/autorun'
+require_relative '../test_utils'
 
 SAMPLE_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
@@ -155,11 +156,13 @@ end
 
 
 RSpec.describe '#golfed' do
-  subject { golfed text }
+  subject { capture_stdout{golfed text}.string }
 
   context 'real example' do
     let(:text) { SAMPLE_TEXT }
-    it { expect(subject).to eql <<-EOS.chomp
+    it { 
+
+      expect(subject).to eql <<-EOS
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor
 incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis
 nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -177,32 +180,35 @@ EOS
   end
 end
 
-def inlined_version getS
+def inlined_version gets
+
+  input = gets+' '
   
   result = ''
 
   (70..smallest_max=90).each{|w|
 
     #split text into words of at most w characters
-    wrap = (getS+' ').scan(%r{(.{1,#{w-1}}\S) }).flatten
+    wrap = (input+' ').scan(%r{(.{1,#{w-1}}\S) }).flatten
 
     #transpose lines and find biggest "river"
     max_crt_river = (0..99).map{|i| wrap.map{|l|l[i]} }.flatten.join.scan(/ +/).max_by(&:size).size
 
-    if max_crt_river<smallest_max
+    if max_crt_river < smallest_max
       smallest_max = max_crt_river
       result = wrap.join ?\n
     end
   }
-  result
+  puts result
 
 end
 
-def golfed getS
+def golfed gets
 
-(70..s=r=90).each{|c|w=(getS+' ').scan(%r{(.{1,#{c-1}}\S) }).flatten
+i=gets+' '
+(70..s=r=90).each{|c|w=(i+' ').scan(%r{(.{1,#{c-1}}\S) }).flatten
 m=(0..c).map{|i|w.map{|l|l[i]}}.join.scan(/ +/).map(&:size).max
-m<s&&(s=m;r=w.join ?\n)}
-r
+m<s&&(s=m;r=w)}
+puts r
 
 end
