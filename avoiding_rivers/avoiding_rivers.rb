@@ -183,7 +183,10 @@ def inlined_version getS
 
   (70..smallest_max=90).each{|w|
 
+    #split text into words of at most w characters
     wrap = (getS+' ').scan(%r{(.{1,#{w-1}}\S) }).flatten
+
+    #transpose lines and find biggest "river"
     max_crt_river = (0..99).map{|i| wrap.map{|l|l[i]} }.flatten.join.scan(/ +/).max_by(&:size).size
 
     if max_crt_river<smallest_max
