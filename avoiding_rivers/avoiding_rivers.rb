@@ -204,7 +204,7 @@ end
 def golfed gets
 
 i=gets+' '
-(69..s=r=89).map{|c|w=(i+' ').scan(/(.{1,#{c}}\S) /).flatten
+(69..s=r=89).map{|c|w=i.scan(/(.{1,#{c}}\S) /).flatten
 m=(0..c).map{|i|w.map{|l|l[i]}}.join.scan(/ +/).map(&:size).max
 m<s&&(s=m;r=w)}
 puts r
