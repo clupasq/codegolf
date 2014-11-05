@@ -1,7 +1,9 @@
 require 'rspec/autorun'
 
+SAMPLE_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+
 RSpec.describe 'program' do
-  let(:large_text){ 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }
+  let(:large_text){ SAMPLE_TEXT }
 
   describe '#split_into_words' do
     it { expect(split_into_words('Lorem ipsum dolor sit amet, consectetur ')).to eql ['Lorem','ipsum','dolor','sit','amet,','consectetur'] } 
@@ -130,7 +132,7 @@ end
 
 
 def max_river text_lines, wrap_width
-  (0..82).map{|i| text_lines.map{|l|l[i]}.join.scan(/ +/) }.flatten.max_by(&:size).size
+  (0..99).map{|i| text_lines.map{|l|l[i]}.join.scan(/ +/) }.flatten.max_by(&:size).size
 end
 
 def optimum_wrap text, min, max
@@ -147,4 +149,48 @@ def optimum_wrap text, min, max
     end
   }
   result
+end
+
+
+
+
+RSpec.describe '#golfed' do
+  subject { golfed text }
+
+  context 'real example' do
+    let(:text) { SAMPLE_TEXT }
+    it { expect(subject).to eql <<-EOS.chomp
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor
+incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor
+sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut
+labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+EOS
+    }
+  end
+end
+
+def golfed getS
+  
+  result = ''
+
+  (70..smallest_max=90).each{|w|
+
+    wrap = (getS+' ').scan(%r{(.{1,#{w-1}}\S) }).flatten
+    max_crt_river = (0..99).map{|i| wrap.map{|l|l[i]} }.flatten.join.scan(/ +/).max_by(&:size).size
+
+    if max_crt_river<smallest_max
+      smallest_max = max_crt_river
+      result = wrap.join ?\n
+    end
+  }
+  result
+
 end
