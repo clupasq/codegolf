@@ -63,15 +63,43 @@ RSpec.describe 'program' do
   end
 
   describe '#optimum_wrap' do
-    subject { optimum_wrap text }
+    subject { optimum_wrap text, min, max }
 
     context 'simple example' do
-      let(:text) { '' }
+      let(:text) { 'abc def ghi jkl mno pqr' }
+      let(:min) { 7 }
+      let(:max) { 16 }
+
+      it { expect(subject).to eql <<-EOS.chomp
+abc def ghi
+jkl mno pqr
+EOS
+      }
+
     end
 
-  end
-end
+    context 'real example' do
+      let(:text) { large_text }
+      let(:min) { 70 }
+      let(:max) { 90 }
 
+            it { expect(subject).to eql <<-EOS.chomp
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor
+incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor
+sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut
+labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+EOS
+      }
+    end
+  end
 end
 
 
@@ -106,5 +134,17 @@ def max_river text_lines, wrap_width
 end
 
 def optimum_wrap text, min, max
-  
+
+  smallest_max = max
+  result = ''
+
+  min.upto(max){|w|}
+  (min..max).each{|w|
+    wrap = print_text_with_max_width(text, w)
+    if max_river(wrap,w)<smallest_max
+      smallest_max = max_river(wrap,w)
+      result = wrap.join ?\n
+    end
+  }
+  result
 end
