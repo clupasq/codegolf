@@ -177,7 +177,7 @@ EOS
   end
 end
 
-def golfed getS
+def inlined_version getS
   
   result = ''
 
@@ -192,5 +192,14 @@ def golfed getS
     end
   }
   result
+
+end
+
+def golfed getS
+
+(70..s=r=90).each{|c|w=(getS+' ').scan(%r{(.{1,#{c-1}}\S) }).flatten
+m=(0..c).map{|i|w.map{|l|l[i]}}.join.scan(/ +/).map(&:size).max
+m<s&&(s=m;r=w.join ?\n)}
+r
 
 end
