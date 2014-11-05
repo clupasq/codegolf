@@ -181,7 +181,6 @@ EOS
 end
 
 def inlined_version gets
-
   input = gets+' '
   
   result = ''
@@ -200,13 +199,12 @@ def inlined_version gets
     end
   }
   puts result
-
 end
 
 def golfed gets
 
 i=gets+' '
-(70..s=r=90).each{|c|w=(i+' ').scan(%r{(.{1,#{c-1}}\S) }).flatten
+(70..s=r=90).map{|c|w=(i+' ').scan(%r{(.{1,#{c-1}}\S) }).flatten
 m=(0..c).map{|i|w.map{|l|l[i]}}.join.scan(/ +/).map(&:size).max
 m<s&&(s=m;r=w)}
 puts r
