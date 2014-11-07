@@ -2,6 +2,7 @@ require 'rspec/autorun'
 require_relative '../test_utils'
 
 SAMPLE_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eismod tempor incididunt ut labore et dolore maga aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+JOSHPBARRON_TEXT = 'a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4'
 
 RSpec.describe 'program' do
   let(:large_text){ SAMPLE_TEXT }
@@ -178,6 +179,27 @@ culpa qui officia deserunt mollit anim id est laborum.
 EOS
     }
   end
+
+  context 'problem signalled by Joshpbarron' do
+    let(:text){ JOSHPBARRON_TEXT }
+
+    it {expect(subject).to eql <<-EOS
+a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g 4a sd da s e g
+EOS
+    }
+  end
 end
 
 def inlined_version gets
@@ -201,11 +223,38 @@ def inlined_version gets
   puts result
 end
 
+def debug_version gets
+  input = gets+' '
+  
+  result = ''
+  width =10
+
+  (70..smallest_max=90).each{|w|
+
+    #split text into words of at most w characters
+    wrap = (input+' ').scan(%r{(.{1,#{w-1}}\S) }).flatten
+
+    #transpose lines and find biggest "river"
+    max_crt_river = (0..99).map{|i| wrap.map{|l|l[i]} }.flatten.join.scan(/ +/).max_by(&:size).size
+
+    puts "mcr -> #{max_crt_river}"
+
+    if max_crt_river < smallest_max
+      smallest_max = max_crt_river
+      width = w
+      result = wrap.join ?\n
+    end
+  }
+  puts width
+  puts result
+end
+
+
 def golfed gets
 
 i=gets+' '
 (69..s=r=89).map{|c|w=i.scan(/(.{1,#{c}}\S) /).flatten
-m=(0..c).map{|i|w.map{|l|l[i]}}.join.scan(/ +/).map(&:size).max
+m=(0..c).map{|i|w.map{|l|l[i]}.join.scan(/ +/)}.flatten.map(&:size).max
 m<s&&(s=m;r=w)}
 puts r
 
