@@ -1,10 +1,14 @@
+require 'stringio'
+
 module Kernel
-  def capture_stdout
+  def capture_stdout(console_input = '')
+    $stdin = StringIO.new(console_input)
     out = StringIO.new
     $stdout = out
     yield
     return out
   ensure
     $stdout = STDOUT
-  end 
+    $stdin = STDIN
+  end
 end

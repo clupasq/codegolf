@@ -57,10 +57,7 @@ RSpec.describe '#character_cross' do
   it { expect(character_cross('PROGRAM')).to eql TARGET.chomp }
 end
 
-RSpec.describe 'golfed implementation' do
-  let(:console_out) { StringIO.new }
-  before { out = console_out }
-  
+RSpec.describe 'golfed implementation' do 
   it 'prints correct output' do
     out = capture_stdout{ f['PROGRAM'] }
     expect(out.string).to eql TARGET 
