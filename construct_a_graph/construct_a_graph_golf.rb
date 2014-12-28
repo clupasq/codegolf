@@ -1,36 +1,10 @@
 # coding: utf-8
 
-N = Struct.new :l
-
-
-def compute_graph_count(commands)
+N=Struct.new:l
+def g(c)
   @n = []
-
-  def add_disconnected_node
-    @n << N.new([])
-  end
-
-  def add_connected_node
-    n = N.new([])
-    @n.each{ |x| x.l<<n;n.l<<x }
-    @n << n
-  end
-
-  def remove_degree(d)
-    to_delete = @n.select { |x| x.l.size%d<1 }
-    @n -= to_delete
-    @n.each{ |x| x.l-=to_delete }
-  end
-
-  commands.each do |cmd|
-    case cmd
-    when 0 then add_disconnected_node
-    when 1 then add_connected_node
-    else remove_degree(cmd)
-    end
-  end
-
-  @n.count
+  c.map{|m|m==0?(@n<<N.new([])):m==1?(n=N.new([]);@n.map{|x|x.l<<n;n.l<<x};@n<<n):(@n-=r=@n.select{|x|x.l.size%m<1};@n.map{|x|x.l-=r})}
+  @n.size
 end
 
 #--------------------------------------------------
@@ -72,6 +46,6 @@ class TestGraph < MiniTest::Unit::TestCase
   end
 
   def result(commands)
-    compute_graph_count(commands)
+    g(commands)
   end
 end
