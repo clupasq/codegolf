@@ -1,43 +1,35 @@
 # coding: utf-8
-require 'pp'
 
-class Node
-  def initialize
-    @neighbours = []
-  end
-
-  attr_accessor :neighbours
-
+Node = Struct.new(:x) do
   def link(other)
-    @neighbours << other
-    other.neighbours << self
+    x << other
+    other.x << self
   end
 
   def unlink(others)
-    @neighbours -= others
+    self.x -= others
   end
 
-  def degree? l
-    @neighbours.count % l < 1
+  def degree? d
+    x.count % d < 1
   end
 end
-
 
 def compute_graph_count(commands)
   @nodes = []
 
   def add_disconnected_node
-    @nodes << Node.new
+    @nodes << Node.new([])
   end
 
   def add_connected_node
-    new_node = Node.new
+    new_node = Node.new([])
     @nodes.each{ |n| n.link new_node }
     @nodes << new_node
   end
 
-  def remove_degree(l)
-    to_delete = @nodes.select { |n| n.degree? l }
+  def remove_degree(d)
+    to_delete = @nodes.select { |n| n.degree? d }
     @nodes -= to_delete
     @nodes.each{ |n| n.unlink to_delete }
   end
@@ -52,7 +44,6 @@ def compute_graph_count(commands)
 
   @nodes.count
 end
-
 
 #--------------------------------------------------
 
