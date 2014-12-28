@@ -38,12 +38,12 @@ end
 #--- end READABLE
 
 N=Struct.new:l
-G=->c{@n=[]
-c.map{|m|m==0?(@n<<N.new([])):m==1?(w=N.new([])
-@n.map{|x|x.l<<w;w.l<<x}
-@n<<w):(@n-=r=@n.select{|x|x.l.size%m<1}
-@n.map{|x|x.l-=r})}
-@n.size}
+G=->c{n=[]
+c.map{|m|m==0?(n<<N.new([])):m==1?(w=N.new([])
+n.map{|x|x.l<<w;w.l<<x}
+n<<w):(n-=r=n.select{|x|x.l.size%m<1}
+n.map{|x|x.l-=r})}
+n.size}
 
 
 
