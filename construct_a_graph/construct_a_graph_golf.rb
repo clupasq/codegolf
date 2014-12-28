@@ -1,34 +1,25 @@
 # coding: utf-8
 
-Node = Struct.new(:l) do
-  def link(other)
-    l << other
-    other.l << self
-  end
-
-  def unlink(others)
-    self.l -= others
-  end
-end
+N = Struct.new :l
 
 
 def compute_graph_count(commands)
-  @nodes = []
+  @n = []
 
   def add_disconnected_node
-    @nodes << Node.new([])
+    @n << N.new([])
   end
 
   def add_connected_node
-    new_node = Node.new([])
-    @nodes.each{ |n| n.link new_node }
-    @nodes << new_node
+    n = N.new([])
+    @n.each{ |x| x.l<<n;n.l<<x }
+    @n << n
   end
 
   def remove_degree(d)
-    to_delete = @nodes.select { |n| n.l.size%d<1 }
-    @nodes -= to_delete
-    @nodes.each{ |n| n.unlink to_delete }
+    to_delete = @n.select { |x| x.l.size%d<1 }
+    @n -= to_delete
+    @n.each{ |x| x.l-=to_delete }
   end
 
   commands.each do |cmd|
@@ -39,7 +30,7 @@ def compute_graph_count(commands)
     end
   end
 
-  @nodes.count
+  @n.count
 end
 
 #--------------------------------------------------
