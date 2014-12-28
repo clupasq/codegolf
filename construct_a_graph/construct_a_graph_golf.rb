@@ -1,19 +1,16 @@
 # coding: utf-8
 
-Node = Struct.new(:x) do
+Node = Struct.new(:l) do
   def link(other)
-    x << other
-    other.x << self
+    l << other
+    other.l << self
   end
 
   def unlink(others)
-    self.x -= others
-  end
-
-  def degree? d
-    x.count % d < 1
+    self.l -= others
   end
 end
+
 
 def compute_graph_count(commands)
   @nodes = []
@@ -29,7 +26,7 @@ def compute_graph_count(commands)
   end
 
   def remove_degree(d)
-    to_delete = @nodes.select { |n| n.degree? d }
+    to_delete = @nodes.select { |n| n.l.size%d<1 }
     @nodes -= to_delete
     @nodes.each{ |n| n.unlink to_delete }
   end
