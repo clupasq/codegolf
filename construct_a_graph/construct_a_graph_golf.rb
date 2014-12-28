@@ -22,17 +22,9 @@ class Node
   end
 end
 
-class Graph
-  def initialize(commands)
-    @nodes = []
-    commands.each do |cmd|
-      case cmd
-      when 0 then add_disconnected_node
-      when 1 then add_connected_node
-      else remove_degree(cmd)
-      end
-    end
-  end
+
+def compute_graph_count(commands)
+  @nodes = []
 
   def add_disconnected_node
     @nodes << Node.new
@@ -50,10 +42,17 @@ class Graph
     @nodes.each{ |n| n.unlink to_delete }
   end
 
-  def count
-    @nodes.count
+  commands.each do |cmd|
+    case cmd
+    when 0 then add_disconnected_node
+    when 1 then add_connected_node
+    else remove_degree(cmd)
+    end
   end
+
+  @nodes.count
 end
+
 
 #--------------------------------------------------
 
@@ -94,6 +93,6 @@ class TestGraph < MiniTest::Unit::TestCase
   end
 
   def result(commands)
-    Graph.new(commands).count
+    compute_graph_count(commands)
   end
 end
