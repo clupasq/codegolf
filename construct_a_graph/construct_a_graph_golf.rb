@@ -1,11 +1,52 @@
 # coding: utf-8
 
-N=Struct.new:l
-def g(c)
-  @n = []
-  c.map{|m|m==0?(@n<<N.new([])):m==1?(n=N.new([]);@n.map{|x|x.l<<n;n.l<<x};@n<<n):(@n-=r=@n.select{|x|x.l.size%m<1};@n.map{|x|x.l-=r})}
-  @n.size
+#--- begin READABLE
+
+Node = Struct.new(:linked)
+
+def Graph(cmds)
+  @nodes=[]
+
+  def add_disconnected_node
+    @nodes << Node.new([])
+  end
+
+  def add_connected_node
+    new_node = Node.new([])
+    @nodes.map{ |x|
+      x.linked << new_node
+      new_node.linked << x
+    }
+    @nodes << new_node
+  end
+
+  def remove_degree(m)
+    to_remove = @nodes.select{|x|x.linked.size % m < 1}
+    @nodes -= to_remove
+    @nodes.map{|x| x.linked -= to_remove}
+  end
+
+  cmds.map { |m|
+    m==0 ? add_disconnected_node 
+      : m==1 ? add_connected_node
+        : remove_degree(m) 
+  }
+
+  @nodes.size
 end
+
+#--- end READABLE
+
+N=Struct.new:l
+G=->c{@n=[]
+c.map{|m|m==0?(@n<<N.new([])):m==1?(w=N.new([])
+@n.map{|x|x.l<<w;w.l<<x}
+@n<<w):(@n-=r=@n.select{|x|x.l.size%m<1}
+@n.map{|x|x.l-=r})}
+@n.size}
+
+
+
 
 #--------------------------------------------------
 
@@ -46,6 +87,6 @@ class TestGraph < MiniTest::Unit::TestCase
   end
 
   def result(commands)
-    g(commands)
+    G[commands]
   end
 end
