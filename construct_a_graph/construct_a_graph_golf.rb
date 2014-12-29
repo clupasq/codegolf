@@ -27,8 +27,8 @@ def Graph(cmds)
   end
 
   cmds.map { |m|
-    m==0 ? add_disconnected_node 
-      : m==1 ? add_connected_node
+    m<1 ? add_disconnected_node 
+      : m<2 ? add_connected_node
         : remove_degree(m) 
   }
 
@@ -39,7 +39,7 @@ end
 
 N=Struct.new:l
 G=->c{n=[]
-c.map{|m|m<1?n<<N.new([]):m==1?(w=N.new([])
+c.map{|m|m<1?n<<N.new([]):m<2?(w=N.new([])
 n.map{|x|x.l<<w;w.l<<x}
 n<<w):(n-=r=n.select{|x|x.l.size%m<1}
 n.map{|x|x.l-=r})}
