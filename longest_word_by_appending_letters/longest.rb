@@ -3,7 +3,5 @@
 h={}
 open('voc').map{|l|h[l.strip]=1}
 v=->w{w<?a||h[w]&&v[w.chop]}
-p h.keys.select{|w|v[w]}.max_by &:size
-
-
+p h.keys.max_by{|w|w.size*(v[w]?1:0)}
 
