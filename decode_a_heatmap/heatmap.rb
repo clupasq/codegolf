@@ -5,8 +5,7 @@ f=->s{
 r=s.dup
 l=s.index(?\n)+1
 (0...s.size).map{|i|
-s[i]<?0||(g=->n{n<0?0:s[n].to_i}
-r[i]=g[i]<1??.:[i-1,i+1,i-l,i+l].map{|n|g[n]}.max>g[i]??-:s[i])}
+s[i]<?0||r[i]=r[i]<?1??.:[i-1,i+1,i-l,i+l].map{|n|n<0??0:s[n]||?0}.max>r[i]??-:s[i]}
 r}
 
 
