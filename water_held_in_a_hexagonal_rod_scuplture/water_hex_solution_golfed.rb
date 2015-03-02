@@ -2,11 +2,7 @@
 require 'minitest/autorun'
 require 'pp'
 
-Rod = Struct.new :x,:y,:height,:water_height,:neighbors do
-  def to_s
-    "(#{x},#{y})->#{height}"
-  end
-
+Rod = Struct.new :height,:water_height,:neighbors do
   def total_height
     height + water_height
   end
@@ -19,10 +15,10 @@ f=->input{
   l = input.lines
   (0...l.size).map do |y|
     x=0
-    l[y].scan(/../).map{|v| list[[x,y]] = Rod.new x, y, v.to_i, v.to_i<1?0:99; x+=1}
+    l[y].scan(/../).map{|v| list[[x,y]] = Rod.new v.to_i, v.to_i<1?0:99; x+=1}
   end 
 
-  empty_rod = Rod.new(0,0,0,0)
+  empty_rod = Rod.new(0,0)
   find_rod_by_coords=->x,y{list[[x, y]] || empty_rod}
 
   # populate the neighbors of each rod
