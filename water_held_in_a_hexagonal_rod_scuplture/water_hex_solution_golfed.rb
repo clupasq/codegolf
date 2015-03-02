@@ -32,20 +32,18 @@ f=->input{
   end
 
   # let the water leak...
-  changed = 1
-
   adjust_water=->rod{
     m = rod.neighbors.map(&:total_height).min
-    if rod.total_height > m && rod.water_height > 0
-      rod.water_height = [0,m-rod.height].max
-      changed = 1
-    end
+
+    adjusted = rod.total_height > m && rod.water_height > 0
+
+    rod.water_height = [0,m-rod.height].max if adjusted
+    
+    adjusted
   }
 
-  (changed=!0
-    list.map{|rod| adjust_water[rod]}
-  )while changed
-
+  loop{break if list.map{|rod| adjust_water[rod]}.none? }
+  
   # ...and return the result
   list.map(&:water_height).reduce :+
 }
