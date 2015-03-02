@@ -1,36 +1,16 @@
-# http://codegolf.stackexchange.com/questions/47229/water-held-in-a-hexagonal-rod-scuplture
+# http://codegolf.stackexchange.com/questions/47229/water-held-in-a-hexagonal-r-scuplture
 require 'minitest/autorun'
-require 'pp'
 
-f=->i{
-s = {}
-l = i.lines
-
+f=->i{s={}
+l=i.lines
 y=0
 l.map{|r|x=0
-r.scan(/../).map{|v| s[[x,y]]=[v=v.to_i, v<1?0:99]; x+=1}
+r.scan(/../).map{|v|s[[x,y]]=[v=v.to_i,v<1?0:99];x+=1}
 y+=1}
-
-
-adjust_water=->c,rod{
-  x, y = c
-  nco = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]]
-  ns = nco.map{|w,z| s[[x+w, y+z]]}
-
-  m = ns.map{|n| n ? n[0]+n[1] : 0}.min
-
-  adjusted = rod[0]+rod[1] > m && rod[1] > 0
-
-  rod[1] = [0,m-rod[0]].max if adjusted
-  
-  adjusted
-}
-
-loop{break if s.map{|x| adjust_water[*x]}.none? }
-
-# ...and return the result
-s.map{|c, rod| rod[1]}.reduce :+
-}
+loop{break if s.map{|c,r|x,y=c
+m = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]].map{|w,z|s[[x+w,y+z]]}.map{|n|n ?n[0]+n[1]:0}.min
+r[1]=[0,m-r[0]].max if r[0]+r[1]>m&&r[1]>0}.none?}
+s.map{|c,r|r[1]}.reduce :+}
 
 
 describe '#f' do
