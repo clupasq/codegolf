@@ -2,7 +2,8 @@
 require 'minitest/autorun'
 
 # The program is wrapped in a function, in order for it to be testable.
-# `ii` is used instead of `$<` ()
+# `ii` is used instead of `$<` 
+# (`$<` cannot be mocked in tests and `ii` is also 2 chars long)
 f=->ii{
 # -- program begin --
 s={}
