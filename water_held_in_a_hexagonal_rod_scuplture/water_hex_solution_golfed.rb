@@ -8,29 +8,23 @@ Rod = Struct.new :height,:water_height,:neighbors do
   end
 end
 
-f=->input{
+f=->i{
 
-  #parse input
-  list = {}
-  l = input.lines
-  (0...l.size).map do |y|
-    x=0
-    l[y].scan(/../).map{|v| list[[x,y]] = Rod.new v.to_i, v.to_i<1?0:99; x+=1}
-  end 
+  s = {}
+  l = i.lines
+ 
+y=0
+l.map{|r|x=0
+r.scan(/../).map{|v| s[[x,y]] = Rod.new v.to_i, v.to_i<1?0:99; x+=1}
+y+=1}
 
-  empty_rod = Rod.new(0,0)
-  find_rod_by_coords=->x,y{list[[x, y]] || empty_rod}
 
-  # populate the neighbors of each rod
-  list.each do |c, rod|
+  adjust_water=->c,rod{
     x, y = c
-    neighbor_coord_offsets = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]]
-    rod.neighbors = neighbor_coord_offsets.map{|w,z| find_rod_by_coords[x+w, y+z]}
-  end
+    nco = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]]
+    ns = nco.map{|w,z| s[[x+w, y+z]]}
 
-  # let the water leak...
-  adjust_water=->rod{
-    m = rod.neighbors.map(&:total_height).min
+    m = ns.map{|n| n ? n.total_height : 0}.min
 
     adjusted = rod.total_height > m && rod.water_height > 0
 
@@ -39,39 +33,39 @@ f=->input{
     adjusted
   }
 
-  loop{break if list.map{|c,rod| adjust_water[rod]}.none? }
+  loop{break if s.map{|x| adjust_water[*x]}.none? }
   
   # ...and return the result
-  list.map{|c, rod| rod.water_height}.reduce :+
+  s.map{|c, rod| rod.water_height}.reduce :+
 }
 
 
 describe '#f' do
 
   it 'passes test case #1' do
-    input = <<-EOS
+    i = <<-EOS
   04  04
 04  01  03
   04  04
 EOS
     
-    assert_equal 2, f[input]
+    assert_equal 2, f[i]
   end
 
   it 'passes test case #2' do
-    input = <<-EOS
+    i = <<-EOS
 55  34  45  66
   33  21  27
 23  12  01  77
   36  31  74
 EOS
 
-    assert_equal 35, f[input]
+    assert_equal 35, f[i]
   end
 
 
   it 'passes test case #3' do
-    input = <<-EOS
+    i = <<-EOS
         35  36  77  22                      23  32  54  24
       33  07  02  04  21                  54  07  07  07  76
     20  04  07  07  01  20              54  11  81  81  07  76
@@ -91,6 +85,6 @@ EOS
                                 90
 EOS
 
-    assert_equal 1432, f[input]
+    assert_equal 1432, f[i]
   end
 end
