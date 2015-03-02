@@ -2,7 +2,6 @@
 require 'minitest/autorun'
 require 'pp'
 
-
 Rod = Struct.new :x,:y,:height,:water_height,:neighbors do
   def to_s
     "(#{x},#{y})->#{height}"
@@ -14,38 +13,40 @@ Rod = Struct.new :x,:y,:height,:water_height,:neighbors do
 end
 
 f=->input{
+
+  #parse input
   list = []
-
   l = input.lines
+  (0...l.size).map do |y|
+    x=-1      
+    list += l[y].scan(/../).map{|v| Rod.new x=x+1, y, v.to_i, v.to_i<1?0:99}
+  end 
 
-  (0...l.size).map{ |y|
-    x=-1
-    list += l[y].scan(/../).map{|v| Rod.new x=x+1,y,v.to_i, v.to_i<1?0:99}
-  }
-  g=->x,y{list.find{|r|r.x==x&&r.y==y}||Rod.new(0,0,0,0)}
+  empty_rod = Rod.new(0,0,0,0)
+  find_rod_by_coords=->x,y{list.find{ |r| r.x==x && r.y==y } || empty_rod}
 
+  # populate the neighbors of each rod
   list.each do |rod|
-    rod.neighbors = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]].map{|w,z| g[rod.x+w,rod.y+z]}
+    neighbor_coord_offsets = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]]
+    rod.neighbors = neighbor_coord_offsets.map{|w,z| find_rod_by_coords[rod.x+w,rod.y+z]}
   end
 
-  changed=1
+  # let the water leak...
+  changed = 1
 
   adjust_water=->r{
     m=r.neighbors.map(&:total_height).min
     if r.total_height > m && r.water_height > 0
       r.water_height = [0,m-r.height].max
-      changed=1
+      changed = 1
     end
   }
-
-  # pp g[1, 2].neighbors[1]
-  # pp g[2, 1].neighbors.map(&:to_s)
-
 
   (changed=!0
     list.map{|rod| adjust_water[rod]}
   )while changed
 
+  # ...and return the result
   list.map(&:water_height).reduce :+
 }
 
