@@ -3,7 +3,7 @@
 h={}
 $<.map{|l|h[l.strip]=1}
 v=->w,c=[]{w<?a?c:h[w]&&(v[w.chop,z=[w]+c]||v[w[1..-1],z])}
-puts h.map{|k,_|(v[k]||[]).join ?\n}.max_by &:size
+puts h.map{|k,_|v[k]||0}.max_by &:size
 
 
 # Commandline:
