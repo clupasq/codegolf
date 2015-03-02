@@ -15,20 +15,21 @@ end
 f=->input{
 
   #parse input
-  list = []
+  list = {}
   l = input.lines
   (0...l.size).map do |y|
-    x=-1      
-    list += l[y].scan(/../).map{|v| Rod.new x=x+1, y, v.to_i, v.to_i<1?0:99}
+    x=0
+    l[y].scan(/../).map{|v| list[[x,y]] = Rod.new x, y, v.to_i, v.to_i<1?0:99; x+=1}
   end 
 
   empty_rod = Rod.new(0,0,0,0)
-  find_rod_by_coords=->x,y{list.find{ |r| r.x==x && r.y==y } || empty_rod}
+  find_rod_by_coords=->x,y{list[[x, y]] || empty_rod}
 
   # populate the neighbors of each rod
-  list.each do |rod|
+  list.each do |c, rod|
+    x, y = c
     neighbor_coord_offsets = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]]
-    rod.neighbors = neighbor_coord_offsets.map{|w,z| find_rod_by_coords[rod.x+w,rod.y+z]}
+    rod.neighbors = neighbor_coord_offsets.map{|w,z| find_rod_by_coords[x+w, y+z]}
   end
 
   # let the water leak...
@@ -42,10 +43,10 @@ f=->input{
     adjusted
   }
 
-  loop{break if list.map{|rod| adjust_water[rod]}.none? }
+  loop{break if list.map{|c,rod| adjust_water[rod]}.none? }
   
   # ...and return the result
-  list.map(&:water_height).reduce :+
+  list.map{|c, rod| rod.water_height}.reduce :+
 }
 
 
