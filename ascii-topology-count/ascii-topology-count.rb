@@ -2,8 +2,8 @@ require 'minitest/autorun'
 
 def ascii_topology_count(input)
 
-  max_length = input.lines.map(&:size).max
-  lines = input.lines.map { |l| "%-#{max_length}s"%l }
+  lines = input.lines
+  max_length = lines.map(&:size).max
 
   # hash in which the keys are corners ("+"s), represented by their [y, x] coords
   # and the values are arrays of corners, representing all corners in that group
@@ -17,8 +17,8 @@ def ascii_topology_count(input)
     }
   }
 
-  k = corner_groups.keys
-
+  # function that combines the groups of two different corners
+  # into only one group
   combine_groups =-> c1, c2 {
     g1 = corner_groups[c1]
     g2 = corner_groups[c2]
