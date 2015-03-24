@@ -1,16 +1,15 @@
 require 'minitest/autorun'
 
-F=->i{l = i.lines
-m = l.map(&:size).max
-g = {}
-l.size.times{|y|m.times{|x|l[y][x]==?+&&g[[y, x]]=[[y, x]]}}
+F=->i{l=i.lines
+g={}
+l.size.times{|y|i.size.times{|x|l[y][x]==?+&&g[[y,x]]=[[y,x]]}}
 c=->a,b{w=g[b]+g[a];w.map{|x|g[x]=w}}
 k=g.keys
-k.product(k).map{|n, o|
+k.product(k).map{|n,o|
 r,p=n
 s,q=o
-((r==s&&p<q&&l[r][p...q]=~/^\+-[|-]*$/)||(p==q&&r<s&&l[r...s].map{|l|l[p]||' '}.join=~/^\+\|[|-]*$/))&&c[n, o]}
-g.values.uniq.count}
+((r==s&&p<q&&l[r][p...q]=~/^\+-[|-]*$/)||(p==q&&r<s&&l[r...s].map{|l|l[p]||c}.join=~/^\+\|[|-]*$/))&&c[n,o]}
+g.values.uniq.size}
 
 
 class TestAsciiTopologyCount < Minitest::Test
