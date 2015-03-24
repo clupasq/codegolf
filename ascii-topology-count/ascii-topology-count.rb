@@ -5,28 +5,30 @@ def ascii_topology_count(input)
   max_length = input.lines.map(&:size).max
   lines = input.lines.map { |l| "%-#{max_length}s"%l }
 
-  corners_in_groups = {}
+  # hash in which the keys are corners ("+"s), represented by their [y, x] coords
+  # and the values are arrays of corners, representing all corners in that group
+  corner_groups = {}
 
   lines.size.times { |y|
-    max_length.times{ |x|
+    max_length.times { |x|
       if lines[y][x] == ?+
-        corners_in_groups[[y, x]] = [[y, x]]
+        corner_groups[[y, x]] = [[y, x]]
       end
     }
   }
 
-  k = corners_in_groups.keys
+  k = corner_groups.keys
 
   combine_groups =-> c1, c2 {
-    g1 = corners_in_groups[c1]
-    g2 = corners_in_groups[c2]
+    g1 = corner_groups[c1]
+    g2 = corner_groups[c2]
 
     g2 += g1
-    corners_in_groups[c1] = g2
-    g2.map{|x| corners_in_groups[x] = g2}
+    corner_groups[c1] = g2
+    g2.map{|x| corner_groups[x] = g2}
   }
 
-  corners_in_groups.keys.product(corners_in_groups.keys).map{|c1, c2|
+  corner_groups.keys.product(corner_groups.keys).map{|c1, c2|
     y1,x1=c1
     y2,x2=c2
     if y1 == y2 && x1 < x2
@@ -50,7 +52,7 @@ def ascii_topology_count(input)
     end
   }
 
-  corners_in_groups.values.uniq.count
+  corner_groups.values.uniq.count
 end
 
 
