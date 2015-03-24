@@ -32,7 +32,7 @@ def ascii_topology_count(input)
     if y1 == y2 && x1 < x2
       # test horizontal edge
       t = lines[y1][x1...x2]
-      if t =~ /^\+-(\S*-)?$/
+      if t =~ /^\+-[|-]*$/
         # p "#{c1}, #{c2}, [H] #{t}"
         combine_groups[c1, c2]
 
@@ -43,7 +43,7 @@ def ascii_topology_count(input)
       # test vertical edge
       t=lines[y1...y2].map{|l|l[x1]||' '}.join
 
-      if t =~ /^\+\|(\S*\|)?$/
+      if t =~ /^\+\|[|-]*$/
         # p "#{c1}, #{c2}, [V] #{t}"
         combine_groups[c1, c2]
       end
@@ -100,33 +100,33 @@ EOS
     assert_equal 3, ascii_topology_count(input)
   end
 
-#   def test_4
-#     input = <<-EOS
-#   +--------------+
-#   |  +--+  +--+  |
-#   |  |  |  |  |  |
-# +-|-----|-----|----+
-# | |  |  |  |  |  | |
-# | +--+  +--+  +--+ |
-# +------------------+
+  def test_4
+    input = <<-EOS
+  +--------------+
+  |  +--+  +--+  |
+  |  |  |  |  |  |
++-|-----|-----|----+
+| |  |  |  |  |  | |
+| +--+  +--+  +--+ |
++------------------+
 
-#               +------------+
-#               |            |
-#         +-----+  +-----+   |
-#         |        |     |   |
-#   +-----|-----------+  |   |
-#   |     |  +--+  |  |  |   |
-#   +-+   +--|--|--+  +---------+
-#     |      |  +-+      |   |  |
-#     +------+    |      |   |  |
-#                 +-------+  |  |
-#                        ||  |  |
-#                        |+-----+
-#                        |   |
-#                        +---+
-# EOS
-#     assert_equal 4, ascii_topology_count(input)
-#   end
+              +------------+
+              |            |
+        +-----+  +-----+   |
+        |        |     |   |
+  +-----|-----------+  |   |
+  |     |  +--+  |  |  |   |
+  +-+   +--|--|--+  +---------+
+    |      |  +-+      |   |  |
+    +------+    |      |   |  |
+                +-------+  |  |
+                       ||  |  |
+                       |+-----+
+                       |   |
+                       +---+
+EOS
+    assert_equal 4, ascii_topology_count(input)
+  end
 
   def test_5
     input = <<-EOS
@@ -139,5 +139,16 @@ EOS
       +--------+  +--------+
 EOS
     assert_equal 5, ascii_topology_count(input)
+  end
+
+  def test_3_neaky
+    input = <<-EOS
+   +----+
++-+|+-+ |
+| ||| | |
++-+|+-+ |
+   +----+
+EOS
+    assert_equal 3, ascii_topology_count(input)
   end
 end
