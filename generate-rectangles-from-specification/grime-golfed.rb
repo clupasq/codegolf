@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 
 class R
-  def initialize(letter)
-    @letter = letter
+  def initialize(l)
+    @l=l
     @w=@h=1
   end
 
@@ -17,12 +17,12 @@ class R
   end
 
   def d(c,x,y)
-    @h.times{|h|c[y+h][x...x+@w]=@letter*@w}
+    @h.times{|h|c[y+h][x...x+@w]=@l*@w}
   end
 end
 
 class H
-  def initialize(b, a)
+  def initialize(a, b)
     @a = a
     @b = b
   end
@@ -35,20 +35,20 @@ class H
   end
 
   def tw(nw)
-    @b.tw(nw - @a.w)||@a.tw(nw - @b.w)
+    @a.tw(nw-@b.w)||@b.tw(nw-@a.w)
   end
   def th(nh)
     @a.th(nh)&&@b.th(nh)
   end
 
   def d(c,x,y)
-    @a.d(c,x,y)
-    @b.d(c,x+@a.w,y)
+    @b.d(c,x,y)
+    @a.d(c,x+@b.w,y)
   end
 end
 
 class V
-  def initialize(b, a)
+  def initialize(a,b)
     @a = a
     @b = b;
   end
@@ -65,12 +65,12 @@ class V
   end
 
   def th(nh)
-    @b.th(nh-@a.h)||@a.th(nh-@b.h)
+    @a.th(nh-@b.h)||@b.th(nh-@a.h)
   end
 
   def d(c,x,y)
-    @a.d(c,x,y)
-    @b.d(c,x,y+@a.h)
+    @b.d(c,x,y)
+    @a.d(c,x,y+@b.h)
   end
 end
 
