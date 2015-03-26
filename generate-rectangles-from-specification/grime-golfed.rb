@@ -1,135 +1,101 @@
 require 'minitest/autorun'
 
-def create_canvas(width, height)
-  canvas ||= height.times.map{|_| ?.*width }
-end
-
-class Rectangle
+class R
   def initialize(letter)
     @letter = letter
-    @width = 1
-    @height = 1
+    @w=@h=1
   end
 
-  attr_reader :width, :height
+  attr_accessor :w, :h
 
-  def try_set_width(new_width)
-    if new_width > 0
-      @width = new_width
-      return true
-    end
+  def tw(nw)
+    nw>0&&@w=nw
   end
 
-  def try_set_height(new_height)
-    if new_height > 0
-      @height = new_height
-      return true
-    end
+  def th(nh)
+    nh>0&&@h=nh
   end
 
-  def display(canvas, x=0, y=0)
-    @height.times do |h|
-      canvas[y + h][x...x + @width] = @letter * @width
-    end
-    canvas
+  def d(c,x,y)
+    @h.times{|h|c[y+h][x...x+@w]=@letter*@w}
   end
 end
 
-class HorizontalConcatenation
+class H
   def initialize(b, a)
     @a = a
     @b = b
   end
 
-  def width
-    @a.width + @b.width
+  def w
+    @a.w+@b.w
   end
-  def height
-    return @a.height if @a.height == @b.height
-
-    if @a.try_set_height(@b.height) || @b.try_set_height(@a.height)
-      return @a.height
-    end
+  def h
+    @a.th(@b.h)||@b.th(@a.h);@a.h
   end
 
-  def try_set_width(new_width)
-    return @b.try_set_width(new_width - @a.width) || @a.try_set_width(new_width - @b.width)
+  def tw(nw)
+    @b.tw(nw - @a.w)||@a.tw(nw - @b.w)
   end
-  def try_set_height(new_height)
-    return @a.try_set_height(new_height) && @b.try_set_height(new_height)
+  def th(nh)
+    @a.th(nh)&&@b.th(nh)
   end
 
-  def display(canvas, x=0, y=0)
-    @a.display(canvas, x, y)
-    @b.display(canvas, x + @a.width, y)
-    canvas
+  def d(c,x,y)
+    @a.d(c,x,y)
+    @b.d(c,x+@a.w,y)
   end
 end
 
-class VerticalConcatenation
+class V
   def initialize(b, a)
     @a = a
     @b = b;
   end
 
-  def width
-    return @a.width if @a.width == @b.width
-
-    if @a.try_set_width(@b.width) || @b.try_set_width(@a.width)
-      return @a.width
-    end
+  def w
+    @a.tw(@b.w)||@b.tw(@a.w);@a.w
   end
-  def height
-    @a.height + @b.height
+  def h
+    @a.h+@b.h
   end
 
-  def try_set_width(new_width)
-    return @a.try_set_width(new_width) && @b.try_set_width(new_width)
+  def tw(nw)
+    @a.tw(nw)&&@b.tw(nw)
   end
 
-  def try_set_height(new_height)
-    return @b.try_set_height(new_height - @a.height) || @a.try_set_height(new_height - @b.height)
+  def th(nh)
+    @b.th(nh-@a.h)||@a.th(nh-@b.h)
   end
 
-  def display(canvas, x=0, y=0)
-    @a.display(canvas, x, y)
-    @b.display(canvas, x, y + @a.height)
-    canvas
+  def d(c,x,y)
+    @a.d(c,x,y)
+    @b.d(c,x,y+@a.h)
   end
 end
 
-def parse(input)
-  stack = []
-
-  input.chars.each do |char|
-    case char
-    when ?-
-      stack << VerticalConcatenation.new(stack.pop, stack.pop)
-    when ?|
-      stack << HorizontalConcatenation.new(stack.pop, stack.pop)
-    else
-      stack << Rectangle.new(char)
-    end
-  end
-
-  el = stack.last
-  el.display(create_canvas(el.width, el.height))
+def f(i)
+  s=[]
+  i.each_char{|c|s<<(c=~/\w/?R.new(c):(c>?.?H: V).new(s.pop,s.pop))}
+  e=s[-1]
+  e.d(c=e.h.times.map{|_|?.*e.w},0,0)
+  c
 end
 
 
-class RectangleDisplayTest < Minitest::Test
-  def test_simple_rectangle
+class RDisplayTest < Minitest::Test
+  def test_simple_R
     assert_equivalent('a', 'a')
   end
 
-  def test_stacked_vertically
+  def test_sed_vertically
     assert_equivalent(%q{
 a
 b      
     }, 'ab-')
   end
 
-  def test_stacked_horizontally
+  def test_sed_horizontally
     assert_equivalent(%q{
 ab      
     }, 'ab|')
@@ -177,8 +143,8 @@ ppyriabe
   end
 
 
-  def assert_equivalent(expected_result, input)
-    actual = parse(input)
+  def assert_equivalent(expected_result, i)
+    actual = f(i)
     assert_equal expected_result.strip.split, actual
   end
 end
