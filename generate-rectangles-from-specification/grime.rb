@@ -1,5 +1,3 @@
-
-
 require 'minitest/autorun'
 
 class Displayable
