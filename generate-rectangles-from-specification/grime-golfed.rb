@@ -19,6 +19,7 @@ class Rectangle
       return true
     end
   end
+
   def try_set_height(new_height)
     if new_height > 0
       @height = new_height
@@ -26,9 +27,7 @@ class Rectangle
     end
   end
 
-  def display(canvas=nil, x=0, y=0)
-    canvas ||= create_canvas(width, height)
-
+  def display(canvas, x=0, y=0)
     @height.times do |h|
       canvas[y + h][x...x + @width] = @letter * @width
     end
@@ -60,9 +59,7 @@ class HorizontalConcatenation
     return @a.try_set_height(new_height) && @b.try_set_height(new_height)
   end
 
-  def display(canvas=nil, x=0, y=0)
-    canvas ||= create_canvas(width, height)
-
+  def display(canvas, x=0, y=0)
     @a.display(canvas, x, y)
     @b.display(canvas, x + @a.width, y)
     canvas
@@ -94,9 +91,7 @@ class VerticalConcatenation
     return @b.try_set_height(new_height - @a.height) || @a.try_set_height(new_height - @b.height)
   end
 
-  def display(canvas=nil, x=0, y=0)
-    canvas ||= create_canvas(width, height)
-
+  def display(canvas, x=0, y=0)
     @a.display(canvas, x, y)
     @b.display(canvas, x, y + @a.height)
     canvas
@@ -117,7 +112,8 @@ def parse(input)
     end
   end
 
-  stack.last
+  el = stack.last
+  el.display(create_canvas(el.width, el.height))
 end
 
 
@@ -182,7 +178,7 @@ ppyriabe
 
 
   def assert_equivalent(expected_result, input)
-    actual = parse(input).display
+    actual = parse(input)
     assert_equal expected_result.strip.split, actual
   end
 end
