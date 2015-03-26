@@ -74,13 +74,12 @@ class V
   end
 end
 
-def f(i)
-  s=[]
+F=->i{s=[]
   i.each_char{|c|s<<(c=~/\w/?R.new(c):(c>?.?H: V).new(s.pop,s.pop))}
   e=s[-1]
   e.d(c=e.h.times.map{|_|?.*e.w},0,0)
   c
-end
+}
 
 
 class RDisplayTest < Minitest::Test
@@ -144,7 +143,7 @@ ppyriabe
 
 
   def assert_equivalent(expected_result, i)
-    actual = f(i)
+    actual = F[i]
     assert_equal expected_result.strip.split, actual
   end
 end
