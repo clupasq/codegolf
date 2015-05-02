@@ -11,9 +11,9 @@ c!=' '&&c>?Z?b<<[c,y,x]:t[c.downcase]=[y,x]}
 l=->q{c,y,x=q
 u,i=t[c]
 (m*n).times{|w|e=([u-(y+w)%m,i-(x+w)%n].map &:abs).max
-e>c.ord-97||q<<w+e}}
-b.map &l
-b.map{|x|[x[3],x[0]]}.select{|a,b|a}.sort.map{|a,b|b}}
+e>c.ord-97||q<<w+e}
+q[3]&&[q[3],q[0]]}
+b.map(&l).compact.sort.map{|a,b|b}}
 
 
 describe '#F' do
