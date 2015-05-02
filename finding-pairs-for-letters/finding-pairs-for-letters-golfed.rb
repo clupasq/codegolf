@@ -2,11 +2,9 @@
 require 'minitest/autorun'
 
 F=->s{l=s.split ?\n
-m=l.size
-n=l[0].size
 b=[]
 t={}
-[*0...m].product([*0...n]).map{|y,x|c=l[y][x]
+[*0...m=l.size].product([*0...n=l[0].size]).map{|y,x|c=l[y][x]
 c!=' '&&c>?Z?b<<[c,y,x]:t[c.downcase]=[y,x]}
 b.map{|q|c,y,x=q
 u,i=t[c]
