@@ -7,14 +7,11 @@ n=l[0].size
 b=[]
 t={}
 [*0...m].product([*0...n]).map{|y,x|c=l[y][x]
-c!=' '&&(c>?Z?b<<[c,y,x]:t[c.downcase]=[y,x])}
+c!=' '&&c>?Z?b<<[c,y,x]:t[c.downcase]=[y,x]}
 l=->q{c,y,x=q
 u,i=t[c]
-d=c.ord-97
-(m*n).times{|w|e=([u-y,i-x].map &:abs).max
-e<=d&&q<<w+e
-y=(y+1)%m
-x=(x+1)%n}}
+(m*n).times{|w|e=([u-(y+w)%m,i-(x+w)%n].map &:abs).max
+e>c.ord-97||q<<w+e}}
 b.map &l
 b.map{|x|[x[3],x[0]]}.select{|a,b|a}.sort.map{|a,b|b}}
 
