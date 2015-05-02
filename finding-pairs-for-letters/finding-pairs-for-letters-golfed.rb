@@ -8,12 +8,11 @@ b=[]
 t={}
 [*0...m].product([*0...n]).map{|y,x|c=l[y][x]
 c!=' '&&c>?Z?b<<[c,y,x]:t[c.downcase]=[y,x]}
-l=->q{c,y,x=q
+b.map{|q|c,y,x=q
 u,i=t[c]
 (m*n).times{|w|e=([u-(y+w)%m,i-(x+w)%n].map &:abs).max
 e>c.ord-97||q<<w+e}
-q[3]&&[q[3],q[0]]}
-b.map(&l).compact.sort.map{|a,b|b}}
+q[3]&&[q[3],q[0]]}.compact.sort.map{|a,b|b}}
 
 
 describe '#F' do
