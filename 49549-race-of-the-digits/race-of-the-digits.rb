@@ -6,8 +6,11 @@ F=->digits,length{
   (ds=digits.size).times{|i|positions[digits[i]]=ds-i-1}
   
   result = []
-  
-  digits.cycle.map{|n|
+
+  digits.dup.cycle.map{|n|
+    break if digits==[]
+    next unless positions[n]
+
     steps_left = n
     pos = positions[n]
 
@@ -29,15 +32,17 @@ F=->digits,length{
       end
     end
 
+    # puts (0...length).map{|i|
+    #   (positions.find{|k,v|v%length==i}||[' '])[0].to_s
+    # }.join
+
     if positions[n] >= n*length
       # puts "#{n} finished"
       result << digits.delete(n)
       positions.delete(n)
     end
 
-    puts (0...length).map{|i|
-      (positions.find{|k,v|v%length==i}||[' '])[0].to_s
-    }.join
+
 
   }
 
@@ -48,7 +53,7 @@ p F[[5, 1, 6, 8, 3, 2], 17 ]
 [1, 6, 8, 2, 3, 5]
 
 describe '#F' do
-  break 
+  # break 
   def test_case_1
     assert_equal [3], F[[3], 2]
   end
