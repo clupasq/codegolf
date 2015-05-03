@@ -1,12 +1,9 @@
 require 'minitest/autorun'
 
 F=->digits,length{
-    
   positions={}
   (ds=digits.size).times{|i|positions[digits[i]]=ds-i-1}
-  
   result = []
-
   digits.dup.cycle.map{|n|
     break if digits==[]
     next unless positions[n]
@@ -32,22 +29,53 @@ F=->digits,length{
       end
     end
 
-    # puts (0...length).map{|i|
-    #   (positions.find{|k,v|v%length==i}||[' '])[0].to_s
-    # }.join
-
     if positions[n] >= n*length
-      # puts "#{n} finished"
       result << digits.delete(n)
       positions.delete(n)
     end
-
-
-
   }
-
   result
 }
+
+
+F=->digits,length{
+  digit_positions = digits.map.with_index{|d,i|[d,digits.size-i-1] }
+  
+  result = []
+
+  digits.cycle.map{|n|
+    break if digit_positions==[]
+    crt = digit_positions.find{|x,_|x==n}
+    next unless crt
+
+    steps_left = n
+    pos = crt[1]
+    taking_over = false
+
+    while steps_left > 0
+      other_pos = (digit_positions-[crt]).map{|_,p|p%length}
+
+      steps_left-=1
+      pos += 1
+
+      if other_pos.include? (pos%length)
+        steps_left -= 1 unless taking_over
+        taking_over = true
+      else
+        taking_over = false
+        crt[1] = pos
+      end
+    end
+
+    if crt[1] >= n*length
+      digit_positions.delete(crt)
+      result<<n
+    end
+  }
+  result
+}
+
+
 
 p F[[5, 1, 6, 8, 3, 2], 17 ]
 [1, 6, 8, 2, 3, 5]
