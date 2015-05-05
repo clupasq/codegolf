@@ -2,8 +2,7 @@
 require 'minitest/autorun'
 
 F=->s{r=[1.0]
-s.lines.map{|l|
-n=[i=0.0]*(r.size+1)
+s.lines.map{|l|n=[i=0.0]*(r.size+1)
 l.scan(/\S/).map{|e|a,b=e>?/?e>?]?[0.5]*2:[0,1]:[1,0]
 z=r[i]
 n[i]+=z*a
