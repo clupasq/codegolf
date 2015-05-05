@@ -1,25 +1,15 @@
 # coding: utf-8
 require 'minitest/autorun'
 
-F=->input {
-  probabilities = [1.0]
-
-  input.lines.map{|line|
-
-    new_probabilities = [0.0]*(probabilities.size+1)
-    elements = line.scan /\S/
-    elements.map.with_index{|el, i|
-      deltas = el > '/' ? (el > ']' ? [0.5,0.5] : [0,1]) : [1,0]
-
-      d1, d2 = deltas
-
-      new_probabilities[i] += probabilities[i] * d1
-      new_probabilities[i + 1] += probabilities[i] * d2
-    }
-    probabilities = new_probabilities
-  }
-  probabilities
-}
+F=->s{r=[1.0]
+s.lines.map{|l|
+n=[i=0.0]*(r.size+1)
+l.scan(/\S/).map{|e|a,b=e>?/?e>?]?[0.5]*2:[0,1]:[1,0]
+z=r[i]
+n[i]+=z*a
+n[i+=1]+=z*b}
+r=n}
+r}
 
 describe '#F' do
   def test_0_levels
