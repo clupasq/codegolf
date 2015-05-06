@@ -22,14 +22,13 @@ t=d.map.with_index{|x,i|[x,d.size-i-1]}
 r=[]
 d.cycle.map{|n|
 t==[]&&break
-c=t.find{|x,_|x==n}||next
-s=n
+(c=t.find{|x,_|x==n})&&(s=n
 w=c[1]
 o=p
 (a=(t-[c]).map{|_,p|p%l}
 s-=1;w+=1
 a&[w%l]==[]?(o=p;c[1]=w):o||s-=o=1)while s>0
-c[1]>=n*l&&(t.delete c;r<<n)}
+c[1]>=n*l&&(t.delete c;r<<n))}
 r}
 
 # F = B
