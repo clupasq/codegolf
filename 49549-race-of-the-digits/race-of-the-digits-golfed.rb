@@ -18,7 +18,8 @@ r}
 # alternative #2
 
 F=->d,l{
-t=d.map.with_index{|x,i|[x,d.size-i-1]}
+i=0
+t=d.map{|x|[x,d.size-(i+=1)]}
 r=[]
 d.cycle.map{|n|
 t==[]&&break
