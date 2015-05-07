@@ -1,35 +1,35 @@
 {
-  # Build the direction array and set current position
-  [1 10000:z-1z~)]z*z
+    # Build the direction array and set current position
+    [1 10000:z-1z~)]z*z
 
-  @{
-    # For each character in the input:
+    @{
+      # For each character in the input:
 
-    # set current direction by cutting 0, 1 or 3 elements 
-    # from the beginning of the directions array
-    'SR L'?
-    @>
+      # set current direction by cutting 0, 1 or 3 elements 
+      # from the beginning of the directions array
+      'SR L'?
+      @>
 
-    # move to current direction
-    .0=@+.
+      # move to current direction
+      .0=@+.
 
-    # format as number and addd newline
-    `n
-  }%
+      # format as number and addd newline
+      `n
+    }%
 
-  # split by newlines
-  n/
+    # split by newlines
+    n/
 
-  # cleanup
-  @;\;
+    # cleanup
+    @;\;
 
-  # return 1 if array contains distinct elements, 0 otherwise
-  ..&=
+    # return 1 if array contains distinct elements, 0 otherwise
+    ..&=
 }:ungolfed;
 
 
 {
-[1 10000:z-1z~)]z*z@{'SR L'?@>.0=@+.`n}%n/@;\;..&=
+[1 10000:z-1z~)]z*z@{'R L S'?@>(@+.`n}%n/@;\;..&=
 }:program;
 
 
