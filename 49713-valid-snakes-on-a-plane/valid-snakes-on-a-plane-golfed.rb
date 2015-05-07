@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'minitest/autorun'
 
-F=->s{d=[1,w=z=1e4,-1,-z]
+F=->s{d=[1,w=1e4,-1,-w]
 v=[w]+s.chars.map{|c|w+=d.rotate!(c<?R?-1:c>?R?0:1)[0]}
 v==v&v}
 
