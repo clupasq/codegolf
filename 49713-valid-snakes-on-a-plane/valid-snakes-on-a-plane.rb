@@ -2,6 +2,10 @@
 require 'minitest/autorun'
 
 F = -> input {
+  # Coordinates are expressed using one number,
+  # that is computed using the formula `y + x*max_x`.
+  # Assume max horizontal field width (max_x) to be 10000,
+  # since that's the max length of the input.
   position = max_x = 1e4
 
   # These are possible directions to move to
