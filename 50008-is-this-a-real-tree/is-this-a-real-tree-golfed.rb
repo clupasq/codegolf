@@ -3,8 +3,7 @@ require 'pp'
 require 'minitest/autorun'
 
 F=
-->i{
-w=i.index(?\n)+1
+->i{w=i.index(?\n)+1
 t=[i.index(/[^ _] *\n\z/)]
 a=->x,c{(i[x]==c||i[x]==?_)&&t<<x}
 ((x=t.pop)&&(s=x-w;c=i[x])<?0?(a[s+1,?/];a[s,?\\]):c<?]?(a[s-1,?\\];a[s,?/]):c<?`?(a[x-1,?\\];a[x+1,?/]):a[s,?|]
