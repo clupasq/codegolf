@@ -1,8 +1,7 @@
 require 'minitest/autorun'
 
 F=
-->i,z{
-i.split(?\n).map{|l|z.times.map{|y|l.size.times.map{|i|z.times.map{|x|c=l[i]
+->i,z{i.split(?\n).map{|l|z.times.map{|y|l.size.times.map{|i|z.times.map{|x|c=l[i]
 z<y+2&&(l[i-1..i]=='_\\'||l[i..i+1]=='/_')&&o=?_
 (c<?!||(x==y&&c==?\\)||(z==y+1&&c>?^)||(x+y+1==z&&c==?/))&&o=c
 o||' '}.join}.join.rstrip}-['']}.join ?\n}
