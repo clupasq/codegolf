@@ -2,24 +2,10 @@ require 'minitest/autorun'
 
 F=
 ->i,z{
-  i.split(?\n).map do |l|
-    z.times.map do |y|
-      l.size.times.map do |i|
-        z.times.map do |x|
-          c = l[i]
-
-          
-          z==y+1&&(l[i-1..i]=='_\\'||l[i..i+1]=='/_')&&o=?_
-
-
-          (c==' '||(x==y&&c==?\\)||(z==y+1&&c==?_)||(x+y+1==z&&c==?/))&&o=c
-
-          o || ' '
-        end.join
-      end.join.rstrip
-    end - ['']
-  end.join ?\n
-}
+i.split(?\n).map{|l|z.times.map{|y|l.size.times.map{|i|z.times.map{|x|c=l[i]
+z<y+2&&(l[i-1..i]=='_\\'||l[i..i+1]=='/_')&&o=?_
+(c<?!||(x==y&&c==?\\)||(z==y+1&&c>?^)||(x+y+1==z&&c==?/))&&o=c
+o||' '}.join}.join.rstrip}-['']}.join ?\n}
 
 describe '#F' do
   describe 'small diamond' do

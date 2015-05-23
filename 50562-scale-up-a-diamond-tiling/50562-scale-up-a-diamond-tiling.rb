@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 
 F=
--> input, zoom {
-  input.split(?\n).map do |l|
+-> diamond, zoom {
+  diamond.split(?\n).map do |l|
     zoom.times.map do |y|
       l.size.times.map do |i|
         zoom.times.map do |x|
@@ -10,6 +10,7 @@ F=
 
           out_char = ' '
 
+          # _ has to be continued under / or \
           if zoom == y+1 && l[i-1..i]=='_\\'
             out_char = ?_
           end
@@ -17,6 +18,7 @@ F=
             out_char = ?_
           end
 
+          # logic to "zoom" \, / and _ characters 
           out_char = crt_char if crt_char == ' '
           out_char = crt_char if x==y && crt_char == ?\\  
           out_char = crt_char if zoom==y+1 && crt_char == ?_
