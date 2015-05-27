@@ -1,8 +1,7 @@
 require 'minitest/autorun'
 
 F=
-->m,n{[M[m,n],M[m,n.reverse],M[n,m],M[n,m.reverse]].min}
-M=->u,d{[(0..l=u.size).find{|i|(d.to_i(2)<<i)&u.to_i(2)<1}+d.size,l].max}
+->m,n{[[m,n],[m,n.reverse],[n,m],[n,m.reverse]].map{|u,d|[(0..l=u.size).find{|i|(d.to_i(2)<<i)&u.to_i(2)<1}+d.size,l].max}.min}
 
 describe F do
   def test_1
