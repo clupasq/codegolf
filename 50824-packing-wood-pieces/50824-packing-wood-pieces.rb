@@ -52,8 +52,6 @@ describe '#pack_length' do
     assert_equal 5, pack_length('0010', '10111')
   end
 
-  break
-
   def test_8
     assert_equal 6, pack_length('00010', '11011')
   end
