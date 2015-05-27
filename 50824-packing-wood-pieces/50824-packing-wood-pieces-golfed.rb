@@ -63,4 +63,36 @@ describe F do
   def test_f
     assert_equal 27, F['100010100100111101', '11100101100010100100000001']
   end
+
+  def test_new_1
+    assert_equal 5, F['0010', '10111']
+  end
+
+  def test_new_2
+    assert_equal 5, F['0100', '10111']
+  end
+
+  def test_new_3
+    assert_equal 5, F['0010', '11101']
+  end
+
+  def test_new_4
+    assert_equal 5, F['0100', '11101']
+  end
+
+  def test_new_5
+    assert_equal 5, F['10111', '0010']
+  end
+
+  def test_new_6
+    assert_equal 5, F['10111', '0100']
+  end
+
+  def test_new_7
+    assert_equal 5, F['11101', '0010']
+  end
+
+  def test_new_8
+    assert_equal 5, F['11101', '0100']
+  end
 end
