@@ -2,9 +2,9 @@ require 'minitest/autorun'
 
 BuildTrack =->{ 
 
+# Program begins here ----------
+
 _={│:[1, 4],─:[2, 8],┌:[4, 8],┐:[4, 2],└:[1, 8],┘:[1, 2],┼:[1,4,2,8]}
-
-
 s=->a,l,b{l==[]&&a==[]?b:(l.product(l).any?{|q,r|q,r=q[0],r[0];(q[0]-r[0])**2+(q[1]-r[1])**2>a.size**2}?!0:(w,f=l.pop
 w&&v=!a.size.times{|i|y=_[x=a[i]]
 f&&y&[f]==[]||(k=l.select{|p,d|w!=p||y&[d]==[]}
@@ -13,34 +13,20 @@ g=d<3?d*4:d/4
 b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]}
 v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
 return r if r)}))}
-
 c=gets.split(?,).map &:to_i
 r=s[6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten,[[[0,0],nil]],{}]
+h=j=k=l=0
+r.map{|w,_|y,x=w
+h=[h,x].min
+j=[j,y].min
+k=[k,x].max
+l=[l,y].max}
+s=(j..l).map{|_|' '*(k-h+1)}
+r.map{|w,p|y,x = w
+s[y-j][x-h]=p.to_s}
+puts s
 
-def print_board b
-  min_x = min_y = max_x = max_y = 0
-
-  b.each do |w, _|
-    y, x = w
-    min_x = [min_x, x].min
-    min_y = [min_y, y].min
-    max_x = [max_x, x].max
-    max_y = [max_y, y].max
-  end
-
-  str = (min_y..max_y).map{|_|
-    ' ' * (max_x - min_x + 1)
-  }
-
-  b.each do |w, piece|
-    y, x = w
-    str[y-min_y][x-min_x] = piece.to_s
-  end
-  puts str
-end
-
-print_board r
-
+# Program ends here ----------
 
 }
 
