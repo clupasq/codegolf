@@ -17,12 +17,12 @@ c=gets.split(?,).map &:to_i
 r=s[6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten,[[[0,0],nil]],{}]
 h=j=k=l=0
 r.map{|w,_|y,x=w
-h=[h,x].min
-j=[j,y].min
-k=[k,x].max
-l=[l,y].max}
+h>x&&h=x
+j>y&&j=y
+k<x&&k=x
+l<y&&l=y}
 s=(j..l).map{|_|' '*(k-h+1)}
-r.map{|w,p|y,x = w
+r.map{|w,p|y,x=w
 s[y-j][x-h]=p.to_s}
 puts s
 
