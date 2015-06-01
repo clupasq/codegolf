@@ -2,19 +2,10 @@ require 'minitest/autorun'
 
 BuildTrack =->{ 
 
-_ = {
-  ?│ => [1, 4],
-  ?─ => [2, 8],
-  ?┌ => [4, 8],
-  ?┐ => [4, 2],
-  ?└ => [1, 8],
-  ?┘ => [1, 2],
-  ?┼ => [1, 4, 2, 8], 
-}
-
+_={│:[1, 4],─:[2, 8],┌:[4, 8],┐:[4, 2],└:[1, 8],┘:[1, 2],┼:[1,4,2,8]}
 c=gets.split(?,).map &:to_i
 
-pieces = 6.downto(0).map{|i|_.keys[i]*c[i]}.join.chars
+pieces = 6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten
 
 s=->a,l,b{
   l==[]&&a==[]?b:(
@@ -56,7 +47,7 @@ def print_board b
 
   b.each do |w, piece|
     y, x = w
-    str[y-min_y][x-min_x] = piece
+    str[y-min_y][x-min_x] = piece.to_s
   end
   puts str
 end
