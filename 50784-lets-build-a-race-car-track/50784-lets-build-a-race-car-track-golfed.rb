@@ -42,7 +42,7 @@ c=gets.split(?,).map &:to_i
 
 pieces = 6.downto(0).map{|i|_.keys[i]*c[i]}.join.chars
 
-solve=->(available_pieces,loose_ends=[[[0,0],nil]],board={}){
+solve=->available_pieces,loose_ends,board{
 
   return board if loose_ends==[] and available_pieces==[]
 
@@ -124,7 +124,7 @@ def print_board board
   puts str
 end
 
-print_board(solve[pieces])
+print_board(solve[pieces,[[[0,0],nil]],{}])
 
 
 }
