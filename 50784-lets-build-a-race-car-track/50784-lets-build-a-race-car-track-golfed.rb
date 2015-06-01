@@ -42,71 +42,49 @@ c=gets.split(?,).map &:to_i
 
 pieces = 6.downto(0).map{|i|_.keys[i]*c[i]}.join.chars
 
-solve=->available_pieces,loose_ends,board{
+s=->a,l,b{
+  return b if l==[]&&a==[]
+  return if l.product(l).any?{|q,r|q,r=q[0],r[0];((q[0]-r[0])**2+(q[1]-r[1])**2)>a.size**2}
 
-  return board if loose_ends==[] and available_pieces==[]
+  w,f=l.pop
 
-  # optimization to avoid pursuing expensive paths
-  # which cannot yield a result.
-  # This prunes about 90% of the search space
-  c = loose_ends.map{ |c, _| c }
-  not_enough_pieces = c.product(c).any? { |q, r| 
-    ((q[0]-r[0])**2+(q[1]-r[1])**2) > available_pieces.size**2
-  }
-  return if not_enough_pieces
+  return unless w
 
-  position, connect_from = loose_ends.pop
+  a.size.times do |i|
+    y=_[x=a[i]]
 
-  return unless position
+    r=a[0...i]+a[i+1..-1]
 
-  available_pieces.size.times do |i|
-    piece = available_pieces[i]
+    f&&y&[f]==[]&&next
+    k=l.select{|p,d|w!=p||y&[d]==[]}
+    v=p
+    (y-[f]).map{|dir|
+      z=goto(w, dir)
+      g=opposite(dir)
 
-    remaining_pieces = available_pieces[0...i] + available_pieces[i+1..-1]
-
-    piece_not_connected_ok = connect_from && _[piece] & [connect_from] == []
-    next if piece_not_connected_ok
-
-    new_loose_ends = loose_ends.select  { |pos, dir| 
-      # remove loose ends that may have been 
-      # fixed, now that we placed this piece
-      position != pos || _[piece] & [dir] == []
-    }
-
-    invalid_placement = false
-
-    (_[piece]-[connect_from]).map do |dir|
-      new_pos = goto(position, dir)
-      new_dir = opposite(dir)
-
-      if board[new_pos]
-        if _[board[new_pos]] & [new_dir] != []
-          # do nothing; already connected
+      if b[z]
+        if _[b[z]]&[g]!=[]
         else
-          # going towards an existing piece
-          # which has no suitable connection
-          invalid_placement = true
+          v=0
         end
       else
-        new_loose_ends << [new_pos, new_dir]
+        k<<[z, g]
       end
-    end
+    }
 
-    next if invalid_placement
+    next if v
 
-    new_board = board.merge({position => piece})
-
-    result = solve[remaining_pieces, new_loose_ends, new_board]
-    return result if result
+    r=s[r,k,b.merge({w=>x})]
+    return r if r
   end
-  nil
+  p
 }
 
-def print_board board
+def print_board b
   min_x = min_y = max_x = max_y = 0
 
-  board.each do |position, _|
-    y, x = position
+  b.each do |w, _|
+    y, x = w
     min_x = [min_x, x].min
     min_y = [min_y, y].min
     max_x = [max_x, x].max
@@ -117,14 +95,14 @@ def print_board board
     ' ' * (max_x - min_x + 1)
   }
 
-  board.each do |position, piece|
-    y, x = position
+  b.each do |w, piece|
+    y, x = w
     str[y-min_y][x-min_x] = piece
   end
   puts str
 end
 
-print_board(solve[pieces,[[[0,0],nil]],{}])
+print_board(s[pieces,[[[0,0],nil]],{}])
 
 
 }
@@ -240,7 +218,7 @@ def run_with_profiling
   profile do 
     solution = build_track
   end
-  puts print_board solution
+  puts print_b solution
 end
 
 def run_normally
