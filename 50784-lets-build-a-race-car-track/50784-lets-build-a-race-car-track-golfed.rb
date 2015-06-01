@@ -3,9 +3,7 @@ require 'minitest/autorun'
 BuildTrack =->{ 
 
 _={│:[1, 4],─:[2, 8],┌:[4, 8],┐:[4, 2],└:[1, 8],┘:[1, 2],┼:[1,4,2,8]}
-c=gets.split(?,).map &:to_i
 
-pieces = 6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten
 
 s=->a,l,b{l==[]&&a==[]?b:(l.product(l).any?{|q,r|q,r=q[0],r[0];(q[0]-r[0])**2+(q[1]-r[1])**2>a.size**2}?!0:(w,f=l.pop
 w&&v=!a.size.times{|i|y=_[x=a[i]]
@@ -15,6 +13,9 @@ g=d<3?d*4:d/4
 b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]}
 v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
 return r if r)}))}
+
+c=gets.split(?,).map &:to_i
+r=s[6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten,[[[0,0],nil]],{}]
 
 def print_board b
   min_x = min_y = max_x = max_y = 0
@@ -38,7 +39,7 @@ def print_board b
   puts str
 end
 
-print_board(s[pieces,[[[0,0],nil]],{}])
+print_board r
 
 
 }
