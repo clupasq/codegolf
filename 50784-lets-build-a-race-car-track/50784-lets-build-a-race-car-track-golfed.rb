@@ -45,12 +45,8 @@ pieces = 6.downto(0).map{|i|_.keys[i]*c[i]}.join.chars
 s=->a,l,b{
   return b if l==[]&&a==[]
   return if l.product(l).any?{|q,r|q,r=q[0],r[0];((q[0]-r[0])**2+(q[1]-r[1])**2)>a.size**2}
-
   w,f=l.pop
-
-  w||return
-
-  a.size.times do |i|
+  w&&a.size.times{|i|
     y=_[x=a[i]]
 
     f&&y&[f]==[]&&next
@@ -72,7 +68,7 @@ s=->a,l,b{
 
     v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
     return r if r
-  end
+  }
   p
 }
 
