@@ -70,9 +70,7 @@ s=->a,l,b{
       end
     }
 
-    v&&next
-
-    r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
+    v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
     return r if r
   end
   p
