@@ -7,28 +7,14 @@ c=gets.split(?,).map &:to_i
 
 pieces = 6.downto(0).map{|i|[_.keys[i]]*c[i]}.flatten
 
-s=->a,l,b{
-  l==[]&&a==[]?b:(
-  
-  l.product(l).any?{|q,r|q,r=q[0],r[0];(q[0]-r[0])**2+(q[1]-r[1])**2>a.size**2}?!0:(
-  w,f=l.pop
-  w&&!a.size.times{|i|
-    y=_[x=a[i]]
-
-    f&&y&[f]==[]&&next
-    k=l.select{|p,d|w!=p||y&[d]==[]}
-    v=p
-    (y-[f]).map{|d|
-      z=[w[0]+({1=>-1,4=>1}[d]||0),w[1]+({2=>-1,8=>1}[d]||0)]
-      g=d<3?d*4:d/4
-      b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]    
-    }
-
-    v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
-    return r if r
-  }))
-  
-}
+s=->a,l,b{l==[]&&a==[]?b:(l.product(l).any?{|q,r|q,r=q[0],r[0];(q[0]-r[0])**2+(q[1]-r[1])**2>a.size**2}?!0:(w,f=l.pop
+w&&v=!a.size.times{|i|y=_[x=a[i]]
+f&&y&[f]==[]||(k=l.select{|p,d|w!=p||y&[d]==[]}
+(y-[f]).map{|d|z=[w[0]+({1=>-1,4=>1}[d]||0),w[1]+({2=>-1,8=>1}[d]||0)]
+g=d<3?d*4:d/4
+b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]}
+v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
+return r if r)}))}
 
 def print_board b
   min_x = min_y = max_x = max_y = 0
