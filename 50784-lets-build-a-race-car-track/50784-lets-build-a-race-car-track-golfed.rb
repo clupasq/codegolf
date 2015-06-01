@@ -55,15 +55,7 @@ s=->a,l,b{
     (y-[f]).map{|dir|
       z=goto(w, dir)
       g=opposite(dir)
-
-      if b[z]
-        if _[b[z]]&[g]!=[]
-        else
-          v=0
-        end
-      else
-        k<<[z, g]
-      end
+      b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]    
     }
 
     v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
