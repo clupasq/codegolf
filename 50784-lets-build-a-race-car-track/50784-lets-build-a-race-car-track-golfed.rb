@@ -2,28 +2,6 @@ require 'minitest/autorun'
 
 N, W, S, E = 1, 2, 4, 8
 
-def opposite (dir)
-  dir < 3 ? dir * 4 : dir / 4
-end
-
-def goto(from, dir)
-  y, x = from
-  
-  dx = case dir
-  when W then -1
-  when E then 1
-  else 0
-  end
-
-  dy = case dir
-  when N then -1
-  when S then 1
-  else 0
-  end
-
-  [y+dy, x+dx]
-end
-
 
 BuildTrack =->{ 
 
@@ -53,9 +31,9 @@ s=->a,l,b{
     f&&y&[f]==[]&&next
     k=l.select{|p,d|w!=p||y&[d]==[]}
     v=p
-    (y-[f]).map{|dir|
-      z=goto(w, dir)
-      g=opposite(dir)
+    (y-[f]).map{|d|
+      z=[w[0]+({1=>-1,4=>1}[d]||0),w[1]+({2=>-1,8=>1}[d]||0)]
+      g=d<3?d*4:d/4
       b[z]?_[b[z]]&[g]!=[]||v=0:k<<[z,g]    
     }
 
