@@ -48,12 +48,10 @@ s=->a,l,b{
 
   w,f=l.pop
 
-  return unless w
+  w||return
 
   a.size.times do |i|
     y=_[x=a[i]]
-
-    r=a[0...i]+a[i+1..-1]
 
     f&&y&[f]==[]&&next
     k=l.select{|p,d|w!=p||y&[d]==[]}
@@ -72,9 +70,9 @@ s=->a,l,b{
       end
     }
 
-    next if v
+    v&&next
 
-    r=s[r,k,b.merge({w=>x})]
+    r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
     return r if r
   end
   p
