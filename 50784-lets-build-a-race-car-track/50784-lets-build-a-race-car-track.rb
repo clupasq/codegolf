@@ -36,10 +36,10 @@ CONNECTIONS = {
 }
 
 BuildTrack =-> { 
-  piece_types = %w(│ ─ ┌ ┐ └ ┘ ┼)
+  piece_types = CONNECTIONS.keys
   piece_counts = gets.split(?,).map &:to_i
 
-  pieces = piece_types.zip(piece_counts).map{|p,c|p*c}.join.chars.reverse
+  pieces = 6.downto(0).map{|i|piece_types[i]*piece_counts[i]}.join.chars
 
   def solve (available_pieces, loose_ends=[[[0,0],nil]], board={})
 
@@ -93,9 +93,6 @@ BuildTrack =-> {
 
       next if invalid_placement
 
-      # puts "Placing: #{piece}"
-      # p new_loose_ends
-
       new_board = board.merge({position => piece})
 
       result = solve(remaining_pieces, new_loose_ends, new_board)
@@ -129,24 +126,8 @@ BuildTrack =-> {
   print_board(solve(pieces))
 }
 
-
-# run_normally
-
-  # gets = "2,2,1,1,1,1,0\n" # # ~0.1s
-  # gets = "6,2,1,1,1,1,0\n" # ~0.6s
-
-#  ┌┐
-# ┌┼┘
-# └┘
-  # gets = "0,0,2,1,1,2,1\n" # ~ 0.0s (11 pieces)
-
-  # gets = "4,4,2,1,1,2,1\n" # ~0.4s (15 pieces)
-  
-  # gets = "3,5,2,2,2,2,1\n" # ~34s
-  # gets = "0,0,1,4,4,1,3\n" # ~2s
-
 describe BuildTrack do
-  # takes 0.1s
+  # takes ~0.1s
   def test_very_simple_square
     assert_equal <<-EOS, execute("2,2,1,1,1,1,0\n")
 ┌─┐
@@ -155,7 +136,7 @@ describe BuildTrack do
 EOS
   end
 
-  # takes 0.6s
+  # takes ~0.6s
   def test_added_more_vertical_pieces
     assert_equal <<-EOS, execute("6,2,1,1,1,1,0\n")
 ┌─┐
@@ -166,7 +147,7 @@ EOS
 EOS
   end
 
-  # takes 0.0s
+  # takes ~0.0s
   def test_throwing_cross_pieces_into_the_mix
     assert_equal <<-EOS, execute("0,0,2,1,1,2,1\n")
  ┌┐
@@ -175,7 +156,7 @@ EOS
 EOS
   end
 
-  # takes 0.4s
+  # takes ~0.4s
   def test_longer_track_containing_a_cross_piece
     assert_equal <<-EOS, execute("4,4,2,1,1,2,1\n")
    ┌┐
@@ -186,8 +167,9 @@ EOS
 EOS
   end
 
+  # remove the leading "x_"s to run these long lasting tests
+
   # takes ~34s
-  # remove the leading "x_" to run this test
   def x_test_OP_testcase_1
     assert_equal <<-EOS, execute("3,5,2,2,2,2,1\n")
 ┌──┐┌┐
@@ -198,7 +180,7 @@ EOS
   end
 
   # takes ~2s
-  def test_OP_testcase_2
+  def x_test_OP_testcase_2
     assert_equal <<-EOS, execute("0,0,1,4,4,1,3\n")
 ┌┐   
 └┼┐  
@@ -209,14 +191,10 @@ EOS
   end
 
 
-
-
   def execute(input)
     capture_stdout(input){ BuildTrack[] }
   end
 end
-
-
 
 
 # capture STDIN/STDOUT for testing purposes
@@ -265,3 +243,6 @@ end
 def run_normally
   build_track  
 end
+
+# run_normally
+
