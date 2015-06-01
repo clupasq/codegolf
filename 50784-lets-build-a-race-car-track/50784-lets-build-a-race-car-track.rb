@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*- 
 require 'minitest/autorun'
 
 N, W, S, E = 1, 2, 4, 8
