@@ -43,10 +43,11 @@ c=gets.split(?,).map &:to_i
 pieces = 6.downto(0).map{|i|_.keys[i]*c[i]}.join.chars
 
 s=->a,l,b{
-  return b if l==[]&&a==[]
-  return if l.product(l).any?{|q,r|q,r=q[0],r[0];((q[0]-r[0])**2+(q[1]-r[1])**2)>a.size**2}
+  l==[]&&a==[]?b:(
+  
+  l.product(l).any?{|q,r|q,r=q[0],r[0];(q[0]-r[0])**2+(q[1]-r[1])**2>a.size**2}?!0:(
   w,f=l.pop
-  w&&a.size.times{|i|
+  w&&!a.size.times{|i|
     y=_[x=a[i]]
 
     f&&y&[f]==[]&&next
@@ -60,8 +61,8 @@ s=->a,l,b{
 
     v||r=s[a[0...i]+a[i+1..-1],k,b.merge({w=>x})]
     return r if r
-  }
-  p
+  }))
+  
 }
 
 def print_board b
@@ -177,37 +178,3 @@ module Kernel
     $stdin = STDIN
   end
 end
-
-
-
-
-def profile 
-  require 'ruby-prof'
-
-  # Profile the code
-  RubyProf.start
-  
-  yield
-
-  result = RubyProf.stop
-
-  # Print a flat profile to text
-  printer = RubyProf::FlatPrinter.new(result)
-  printer.print(STDOUT)
-end
-
-
-def run_with_profiling
-  solution = nil
-  profile do 
-    solution = build_track
-  end
-  puts print_b solution
-end
-
-def run_normally
-  build_track  
-end
-
-# run_normally
-
