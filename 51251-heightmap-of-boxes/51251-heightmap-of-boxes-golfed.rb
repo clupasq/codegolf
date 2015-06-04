@@ -6,7 +6,7 @@ w=l=-1
 x=$<.map{|l|w=l.size;l}.join
 b=[]
 x.size.times{|i|c=x[i]
-x[i..i+1]=='+-'&&(x[i+w]==?|?b<<i%w :b-=[i%w])
+x[i..i+1]=='+-'&&(x[i+w]!=?|?b-=[i%w]:b<<i%w)
 c>?z&&l+=b&[i%w]!=[]?1:-1
 $><<(c==' '&&'#=-.'[l]||c)}
 
