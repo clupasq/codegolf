@@ -1,36 +1,14 @@
 require 'minitest/autorun'
 
 Program = -> {
+
 w=l=-1
 x=$<.map{|l|w=l.size;l}.join
 b=[]
-
-x.size.times{|i|
-  c = x[i]
-  
-  if c == ?+ && x[i+1] == ?-
-    if x[i+w] == ?|
-      b << i%w
-    else
-      b-=[i%w]
-    end
-  end
-
-  if c == ?|
-    if b.include? (i%w)
-      l += 1
-    else
-      l -= 1
-    end
-  end
-
-  if c == ' '
-    $><< ('#=-.'[l]||c)
-  else
-    $><<c
-  end
-}
-
+x.size.times{|i|c=x[i]
+x[i..i+1]=='+-'&&(x[i+w]==?|?b<<i%w :b-=[i%w])
+c>?z&&l+=b&[i%w]!=[]?1:-1
+$><<(c==' '&&'#=-.'[l]||c)}
 
 }
 
