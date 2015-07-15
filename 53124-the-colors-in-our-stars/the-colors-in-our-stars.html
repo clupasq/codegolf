@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+  canvas {
+    display: block;
+    padding: 10px;
+  }
+  </style>
+</head>
+<body>
+
+<script type="text/javascript">
+  console.clear();
+
+//readable
+X = function (str) {
+  var lines = str.split("\n");  
+  var canvas = document.createElement('canvas');
+  var z = lines[0].split(u=' ');
+  var width = z[0], height = z[1];
+  
+  canvas.width = width;
+  canvas.height = height;
+  document.body.appendChild(canvas);
+ 
+  var ctx = canvas.getContext("2d");
+  var imageData = ctx.createImageData(width, height);
+  
+  for(var y = 0; y < height; y++){
+    for(var x=0; x < width; x++){
+      var coord = (y * width + x) * 4;
+      
+      for(i=1; i < lines.length;i++){
+        var t = lines[i].split(u);
+
+        var 
+          dx = x - t[0], 
+          dy = y - t[1];
+
+        var distance = Math.sqrt(dx * dx + dy * dy);
+
+        for(var channel = 0; channel < 3; channel++) {
+          var channelIndex = coord + channel;
+          imageData.data[channelIndex] += t[2] * t[3 + channel] / (distance + 1);
+        }
+      }
+      
+      var alphaIndex = coord + 3;
+      imageData.data[alphaIndex] = 255;
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+};
+
+// compressed
+X=function(a){for(l=a.split("\n"),h=document,v=h.createElement("canvas"),z=l[0].split(u=" "),v.width=W=z[0],v.height=H=z[1],h.body.appendChild(v),w=v.getContext("2d"),e=w.createImageData(W,H),d=e.data,y=0;y<H;y++)for(x=0;x<W;x++){for(c=4*(y*W+x),i=1;i<l.length;i++)for(t=l[i].split(u),o=x-t[0],p=y-t[1],r=Math.sqrt(o*o+p*p)+1,q=0;q<3;q++)d[c+q]+=t[2]*t[3+q]/r;d[c+3]=255}w.putImageData(e,0,0)};
+
+X("400 150\n" +
+  "-10 30 100 255 128 0");
+
+X("200 200\n" +
+  "100 100 10 255 255 255\n" +
+  "20 20 40 255 0 0\n" +
+  "180 20 40 255 255 0\n" +
+  "180 180 40 0 255 0\n" +
+  "20 180 40 0 0 255");
+
+X("400 400\n" +
+  "123 231 10 206 119 85\n" +
+  "358 316 27 170 47 99\n" +
+  "95 317 3 202 42 78\n" +
+  "251 269 17 142 150 153\n" +
+  "43 120 3 145 75 61\n" +
+  "109 376 6 230 231 52\n" +
+  "331 78 21 31 81 126\n" +
+  "150 330 21 8 142 23\n" +
+  "69 155 11 142 251 199\n" +
+  "218 335 7 183 248 241\n" +
+  "204 237 13 112 253 34\n" +
+  "342 89 18 140 11 123");
+
+X("400 400\n" +
+  "123 231 5 206 119 85\n" +
+  "358 316 5 170 47 99\n" +
+  "95 317 5 202 42 78\n" +
+  "251 269 5 142 150 153\n" +
+  "43 120 5 145 75 61\n" +
+  "109 376 5 230 231 52\n" +
+  "331 78 5 31 81 126\n" +
+  "150 330 5 8 142 23\n" +
+  "69 155 5 142 251 199\n" +
+  "218 335 5 183 248 241\n" +
+  "204 237 5 112 253 34\n" +
+  "342 89 5 140 11 123");
+
+</script>
+</body>
+</html>
