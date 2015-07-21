@@ -56,7 +56,7 @@ X = function (str) {
 };
 
 // compressed
-function X(a){for(l=a.match(/\d+/g),h=document,v=h.body.appendChild(h.createElement("canvas")),v.width=W=l[0],v.height=H=l[1],w=v.getContext("2d"),e=w.createImageData(W,H),d=e.data,N=W*H;N--;)for(i=2,c=N*4,d[c+3]=255;i<l.length;)for(x=N%W-l[i++],y=~~(N/W)-l[i++],k=l[i++],q=0;q<3;q++)d[c+q]+=k*l[i++]/(Math.sqrt(x*x+y*y)+1);w.putImageData(e,0,0);}
+function X(a){for(l=a.match(/\d+/g),h=document,v=h.body.appendChild(h.createElement("canvas")),v.width=W=l[0],v.height=H=l[1],w=v.getContext("2d"),e=w.createImageData(W,H),d=e.data,N=W*H;N--;)for(i=2,c=N*4,d[c+3]=255;i<l.length;)for(x=N%W-l[i++],y=~~(N/W)-l[i++],k=l[i++],q=0;q<3;)d[c+q++]+=k*l[i++]/(Math.sqrt(x*x+y*y)+1);w.putImageData(e,0,0);}
 
 X("400 150\n" +
   "-10 30 100 255 128 0");
