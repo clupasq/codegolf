@@ -56,7 +56,7 @@ X = function (str) {
 };
 
 // compressed
-X=function(a){for(l=a.split("\n"),h=document,v=h.createElement("canvas"),z=l[0].split(u=" "),v.width=W=z[0],v.height=H=z[1],h.body.appendChild(v),w=v.getContext("2d"),e=w.createImageData(W,H),d=e.data,y=0;y<H;y++)for(x=0;x<W;x++){for(c=4*(y*W+x),i=1;i<l.length;i++)for(t=l[i].split(u),o=x-t[0],p=y-t[1],r=Math.sqrt(o*o+p*p)+1,q=0;q<3;q++)d[c+q]+=t[2]*t[3+q]/r;d[c+3]=255}w.putImageData(e,0,0)};
+function X(a){for(l=a.match(/\d+/g),h=document,v=h.body.appendChild(h.createElement("canvas")),v.width=W=l[0],v.height=H=l[1],w=v.getContext("2d"),e=w.createImageData(W,H),d=e.data,N=W*H;N--;)for(i=2,c=N*4,d[c+3]=255;i<l.length;)for(x=N%W-l[i++],y=~~(N/W)-l[i++],k=l[i++],q=0;q<3;q++)d[c+q]+=k*l[i++]/(Math.sqrt(x*x+y*y)+1);w.putImageData(e,0,0);}
 
 X("400 150\n" +
   "-10 30 100 255 128 0");
@@ -68,6 +68,7 @@ X("200 200\n" +
   "180 180 40 0 255 0\n" +
   "20 180 40 0 0 255");
 
+/*
 X("400 400\n" +
   "123 231 10 206 119 85\n" +
   "358 316 27 170 47 99\n" +
@@ -95,6 +96,7 @@ X("400 400\n" +
   "218 335 5 183 248 241\n" +
   "204 237 5 112 253 34\n" +
   "342 89 5 140 11 123");
+*/
 
 </script>
 </body>
