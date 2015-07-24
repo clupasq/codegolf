@@ -6,7 +6,7 @@ require 'minitest/autorun'
 COMBINATIONS =-> snake {
   expandable_fragments = snake.split /(\|+)/
 
-  (0...2**expandable_fragments.size / 2).map{ |i|
+  (0...2**(expandable_fragments.size/2)).map{ |i|
     x=-1
     snake.gsub(/\|+/){|r| i[x+=1]>0 ? '\/'*r.size : r}
   }
@@ -17,28 +17,34 @@ KISS=
 -> input {
   a,b = input.split
   result = input
-  s = min_distance = input.size
-  COMBINATIONS[a].product(COMBINATIONS[b]){|a,b|
-    distance = (a + b).size - s
+  s = input.size
+  initial_distance = min_distance = input[/ +/].size
+
+  COMBINATIONS[input].map{|c|
+    distance = initial_distance + s - c.size
     if distance > -1 && distance < min_distance
       min_distance = distance
-      result = a+' '*distance+b
+      result = c.gsub(/ +/,' '*distance)
     end
   }
+  
   result
 }
 
 
 describe KISS do 
+  def test_case_0
+    assert_equal '<\/=||:)~~(:\/\/\/\/>', KISS['<|=||:)~     ~(:||||>']
+  end
+
   def test_case_1
-    assert_equal '<\/=||:)~~(:\/\/\/=\/>', KISS['<|=||:)~     ~(:|||=|>']
+    assert_equal '<|=\/\/:)~~(:\/\/\/=|>', KISS['<|=||:)~     ~(:|||=|>']
   end
 
   def test_case_2
-    assert_equal '<\/\/=||||:)~ ~(:\/\/>', KISS['<||=||||:)~   ~(:||>']
+    assert_equal '<\/\/=||||:)~ ~(:||>', KISS['<||=||||:)~   ~(:||>']
   end
 end
-
 
 
 
