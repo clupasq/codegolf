@@ -2,7 +2,7 @@
 require 'pp'
 require 'minitest/autorun'
 
-# enumerates the possible states for a given snake
+# enumerates the possible states for any string containing snakes
 COMBINATIONS =-> snake {
   expandable_fragments = snake.split /(\|+)/
 
@@ -15,7 +15,6 @@ COMBINATIONS =-> snake {
 # finds the configuration in which snakes are closest to each other
 KISS=
 -> input {
-  a,b = input.split
   result = input
   s = input.size
   initial_distance = min_distance = input[/ +/].size
@@ -27,7 +26,7 @@ KISS=
       result = c.gsub(/ +/,' '*distance)
     end
   }
-  
+
   result
 }
 
