@@ -12,18 +12,17 @@ def heatmap(q)
 end
 
 F=->a{
-  placements = get_placements a
-  solution = []
+  q = get_placements a
 
-  while placements.any?
-    h = heatmap(placements)
+  s = ?o*25
 
-    solution << chosen = h.index(h.max)
-
-    placements = placements.reject {|pl| pl[chosen] < ?o }
+  while q.any?
+    h=heatmap(q)
+    s[c=h.index(h.max)]=?X
+    q.reject!{|p|p[c]<?o}
   end
 
-  (0...25).map{|i| solution.include?(i) ? ?X : ?o }.join.scan /.{5}/
+  s.scan /.{5}/
 }
 
 describe 'solver returns optimum number of moves' do
