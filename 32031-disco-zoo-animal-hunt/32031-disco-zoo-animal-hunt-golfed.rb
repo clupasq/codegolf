@@ -1,31 +1,18 @@
 require_relative 'experiments/animals'
 require 'minitest/autorun'
 
-SIZE = 5
 
-# return all possible placements for the animal on a 5x5 board
-def get_placements(animal)
-  # represent the 5x5 board and the animal as linear arrays
-  linear_animal = animal.join(?o*(SIZE - animal[0].size))
-  d = SIZE*SIZE
-  (0..d-linear_animal.size)
-    .select{|i| i/5 == (i+animal[0].size-1)/5} # to avoid wrap-around positions
-    .map { |i|
-      (?o*i + linear_animal + ?o*d)[0...d]
-    }
+def get_placements(a)
+  l = a.join(?o*(5-w=a[0].size))
+  (0..25-l.size).select{|i|i/5==(i+w-1)/5}.map{|i|(?o*i+l+?o*25)}
 end
 
-# given a set of possible placements,
-# return a map of frequencies for every cell
-def heatmap(placements)
-  placements[0].size.times.map do |i|
-    placements.count {|p|p[i] < ?o}
-  end
+def heatmap(q)
+  q[0].size.times.map{|i|q.count{|p|p[i]<?o}}
 end
 
-# given an animal, return the solution as an array of 5 5-character strings
-def solve(animal)
-  placements = get_placements animal
+F=->a{
+  placements = get_placements a
   solution = []
 
   while placements.any?
@@ -37,7 +24,7 @@ def solve(animal)
   end
 
   (0...25).map{|i| solution.include?(i) ? ?X : ?o }.join.scan /.{5}/
-end
+}
 
 describe 'solver returns optimum number of moves' do
   def test_optimal
@@ -58,8 +45,7 @@ describe 'solver returns optimum number of moves' do
   end
 
   def solution_block_count(animal)
-    solve(animal).join.count(?X)
+    F[animal].join.count(?X)
   end
 
 end
-
