@@ -2,17 +2,13 @@ require_relative 'experiments/animals'
 require 'minitest/autorun'
 
 F=
-->a{
-l=a.join(?o*(5-w=a[0].size))
+->a{l=a.join(?o*(5-w=a[0].size))
 s=?o*25
 q=(0..25-l.size).select{|i|i/5==(i+w-1)/5}.map{|i|(?o*i+l+s)}
-while q.any?
-h=q[0].size.times.map{|i|q.count{|p|p[i]<?o}}
+(h=q[0].size.times.map{|i|q.count{|p|p[i]<?o}}
 s[c=h.index(h.max)]=?X
-q.reject!{|p|p[c]<?o}
-end
-s.scan /.{5}/
-}
+q.reject!{|p|p[c]<?o})while q!=[]
+s.scan /.{5}/}
 
 describe 'solver returns optimum number of moves' do
   def test_optimal
