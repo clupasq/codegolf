@@ -19,7 +19,7 @@ def heatmap(placements)
   end
 end
 
-animal = SHEEP
+animal = WOOLY_RHINO
 
 placements = get_placements animal
 solution = []
