@@ -45,6 +45,11 @@ ROCK = [
   'XX',
   'XX']
 
+BEAR = [
+  'XX',
+  'oX',
+  'oX']
+
 LUNAR_TICK = [
   'oXo',
   'ooo',
