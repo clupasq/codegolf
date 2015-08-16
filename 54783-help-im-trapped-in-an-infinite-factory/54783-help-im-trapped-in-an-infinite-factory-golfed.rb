@@ -6,14 +6,14 @@ require 'minitest/autorun'
 #  - more efficient loops on line #2
 
 
-F=->g,w,h,y=0,x=0,d=p,v=[]{r=Hash.new 0
-(y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&(q=g[y][x];q&&r[q]+=1)}}
+F=
+->g,w,h{m=->y,x,d,v=[]{r=->s{g[[0,y].max...y+h].map{|l|l[[0,x].max...x+w]}.join.count s}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
-d=[d,p,0][j**2<=>k**2]
-o=[y,x]
-d ?y+=k<=>0:x+=j<=>0
-o==[y,x]?p: v&[[y, x]]!=[]?1:F[g,w,h,y,x,d,v+[o]]}
+q=y,x
+q[d=[d,1,0][j*j<=>k*k]]+=[k,j][d]<=>0
+v&[q]!=[]?q!=v[-1]:m[*q,d,v<<q]}
+m[0,0,1]}
 
 describe :X do
   describe 'g 1 (2x2)' do
