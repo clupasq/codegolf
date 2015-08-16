@@ -7,10 +7,10 @@ require 'minitest/autorun'
 
 
 F=
-->g,w,h{m=->y,x,d,v=[]{r=->s{g[[0,y].max...y+h].map{|l|l[[0,x].max...x+w]}.join.count s}
+->g,w,h{m=->y,x,d,v=[]{q=y,x
+r=->s{([""]*h+g)[y+h,h].map{|l|(?x*w+l)[x+w,w]}.join.count s}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
-q=y,x
 q[d=[d,1,0][j*j<=>k*k]]+=[k,j][d]<=>0
 v&[q<<d]!=[]?q!=v[-1]:m[*q,v<<q]}
 m[0,0,1]}
