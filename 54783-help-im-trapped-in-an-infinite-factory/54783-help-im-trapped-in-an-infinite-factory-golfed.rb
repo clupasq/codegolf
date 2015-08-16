@@ -1,15 +1,16 @@
 require 'pp'
 require 'minitest/autorun'
 
+
 F=
 ->g,w,h{m=->y,x,d,v=[]{r=Hash.new 0
 (y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&(q=g[y][x];q&&r[q]+=1)}}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
 d=[d,p,0][j**2<=>k**2]
-v<<[y,x]
+o=[y,x]
 d ?y+=k<=>0:x+=j<=>0
-v[-1]==[y,x]?p: v&[[y, x]]!=[]?1:m[y,x,d,v]}
+o==[y,x]?p: v&[[y, x]]!=[]?1:m[y,x,d,v+[o]]}
 m[0,0,p]}
 
 describe :X do
