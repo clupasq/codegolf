@@ -9,7 +9,7 @@ weights = [0]
 gets.chars do |c|
   case c
   when ?[
-    weights[-1]+=1
+    weights[-1] += 1
     stack << ''
     weights << 0
   when ?]
@@ -17,7 +17,7 @@ gets.chars do |c|
 
     if stack.pop == ''
       puts stack.join if last_weight < 1
-      stack[-1]=''
+      stack[-1] = ''
     end
   else
     stack[-1] << c
