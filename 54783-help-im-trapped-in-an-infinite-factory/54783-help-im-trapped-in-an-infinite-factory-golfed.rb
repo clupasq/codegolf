@@ -1,6 +1,10 @@
 require 'pp'
 require 'minitest/autorun'
 
+# ideas: 
+#  - replace r(Hash) with simply vars j, k
+#  - more efficient loops on line #2
+
 
 F=->g,w,h,y=0,x=0,d=p,v=[]{r=Hash.new 0
 (y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&(q=g[y][x];q&&r[q]+=1)}}
