@@ -3,7 +3,7 @@ require 'minitest/autorun'
 
 F=
 ->g,w,h{m=->y,x,d,v=[]{r=Hash.new 0
-(y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&x<g[0].size&&(q=g[y][x];q&&r[q]+=1)}}
+(y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&(q=g[y][x];q&&r[q]+=1)}}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
 d=[d,p,0][j**2<=>k**2]
