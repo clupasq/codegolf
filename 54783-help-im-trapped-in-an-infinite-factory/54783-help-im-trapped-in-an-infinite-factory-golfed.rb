@@ -2,61 +2,18 @@ require 'pp'
 require 'minitest/autorun'
 
 F=
-->g,w,h{
-  total_width = g[0].size
-  total_height = g.size
-
-  conveyors = {}
-
-  g.each_index{|y|
-    g[y].size.times{|x|     
-      q=g[y][x]
-      q>?!&&conveyors[[y,x]]=q
-    }
-  }
-
-
-  move =-> y, x, dir, visited=[] {
-    directions = Hash.new 0
-
-    (y...y + h).map{|y|
-      (x...x + w).map{|x|
-        q = conveyors[[y,x]]
-        directions[q] += 1 if q
-      }
-    }
-
-    horizontal_force = directions[?>] - directions[?<]
-    vertical_force = directions[?v] - directions[?^]
-
-    hf, vf = horizontal_force**2, vertical_force**2
-
-    return 0 if hf+vf < 0
-
-    if hf > vf
-      dir = :horizontal
-    end
-    if vf > hf
-      dir = :vertical
-    end
-
-    visited << [y, x]
-
-    case dir
-    when :horizontal
-      x += horizontal_force <=> 0
-    when :vertical
-      y += vertical_force <=> 0
-    end
-
-    return false if visited[-1] == [y, x]
-    return true if visited.include? [y, x]
-
-    move[y, x, dir, visited]
-  }
-
-  move[0, 0, :horizontal]
-}
+->g,w,h{c={}
+g.each_index{|y|g[y].size.times{|x|q=g[y][x];q>?!&&c[[y,x]]=q}}
+m=->y,x,d,v=[]{r=Hash.new 0
+(y...y+h).map{|y|(x...x+w).map{|x|q=c[[y,x]];q&&r[q]+=1}}
+j=r[?>]-r[?<]
+k=r[?v]-r[?^]
+o,q=j**2,k**2
+d=[d,p,0][o<=>q]
+v<<[y,x]
+d ?y+=k<=>0:x+=j<=>0
+v[-1]==[y,x]?p: v&[[y, x]]!=[]?1:m[y,x,d,v]}
+m[0,0,p]}
 
 describe :X do
   describe 'g 1 (2x2)' do
