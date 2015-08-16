@@ -8,8 +8,7 @@ m=->y,x,d,v=[]{r=Hash.new 0
 (y...y+h).map{|y|(x...x+w).map{|x|q=c[[y,x]];q&&r[q]+=1}}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
-o,q=j**2,k**2
-d=[d,p,0][o<=>q]
+d=[d,p,0][j**2<=>k**2]
 v<<[y,x]
 d ?y+=k<=>0:x+=j<=>0
 v[-1]==[y,x]?p: v&[[y, x]]!=[]?1:m[y,x,d,v]}

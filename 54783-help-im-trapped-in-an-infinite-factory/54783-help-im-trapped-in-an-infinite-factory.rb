@@ -2,7 +2,7 @@ require 'pp'
 require 'minitest/autorun'
 
 F=
-->grid, box_width, box_height {
+-> grid, box_width, box_height {
   total_width = grid[0].size
   total_height = grid.size
 
@@ -28,14 +28,10 @@ F=
     horizontal_force = directions[?>] - directions[?<]
     vertical_force = directions[?v] - directions[?^]
 
-    hf, vf = horizontal_force**2, vertical_force**2
-
-    return 0 if hf+vf < 0
-
-    if hf > vf
+    if horizontal_force.abs > vertical_force.abs
       dir = :horizontal
     end
-    if vf > hf
+    if horizontal_force.abs < vertical_force.abs
       dir = :vertical
     end
 
@@ -48,8 +44,8 @@ F=
       y += vertical_force <=> 0
     end
 
-    return false if visited[-1] == [y, x]
-    return true if visited.include? [y, x]
+    return nil if visited[-1] == [y, x]
+    return 1 if visited.include? [y, x]
 
     move[y, x, dir, visited]
   }
