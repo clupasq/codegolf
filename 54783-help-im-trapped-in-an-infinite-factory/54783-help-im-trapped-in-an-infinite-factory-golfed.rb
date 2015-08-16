@@ -23,10 +23,10 @@ describe :X do
         '^<' ]
     end
 
-    # it 'detects loop for 1x1' do assert F[@g, 1, 1] end
-    # it 'detects loop for 1x2' do assert F[@g, 1, 2] end
-    # it 'detects loop for 2x1' do assert F[@g, 2, 1] end
-    # it 'detects rest for 2x2' do refute F[@g, 2, 2] end
+    it 'detects loop for 1x1' do assert F[@g, 1, 1] end
+    it 'detects loop for 1x2' do assert F[@g, 1, 2] end
+    it 'detects loop for 2x1' do assert F[@g, 2, 1] end
+    it 'detects rest for 2x2' do refute F[@g, 2, 2] end
   end
 
   describe 'g 2 (3x3)' do

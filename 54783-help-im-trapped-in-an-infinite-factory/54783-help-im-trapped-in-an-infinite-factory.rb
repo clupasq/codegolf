@@ -65,10 +65,10 @@ describe :X do
         '^<' ]
     end
 
-    # it 'detects loop for 1x1' do assert F[@grid, 1, 1] end
-    # it 'detects loop for 1x2' do assert F[@grid, 1, 2] end
-    # it 'detects loop for 2x1' do assert F[@grid, 2, 1] end
-    # it 'detects rest for 2x2' do refute F[@grid, 2, 2] end
+    it 'detects loop for 1x1' do assert F[@grid, 1, 1] end
+    it 'detects loop for 1x2' do assert F[@grid, 1, 2] end
+    it 'detects loop for 2x1' do assert F[@grid, 2, 1] end
+    it 'detects rest for 2x2' do refute F[@grid, 2, 2] end
   end
 
   describe 'Grid 2 (3x3)' do
