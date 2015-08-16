@@ -2,16 +2,14 @@ require 'pp'
 require 'minitest/autorun'
 
 
-F=
-->g,w,h{m=->y,x,d,v=[]{r=Hash.new 0
+F=->g,w,h,y=0,x=0,d=p,v=[]{r=Hash.new 0
 (y...y+h).map{|y|(x...x+w).map{|x|y>=0&&y<g.size&&x>=0&&(q=g[y][x];q&&r[q]+=1)}}
 j=r[?>]-r[?<]
 k=r[?v]-r[?^]
 d=[d,p,0][j**2<=>k**2]
 o=[y,x]
 d ?y+=k<=>0:x+=j<=>0
-o==[y,x]?p: v&[[y, x]]!=[]?1:m[y,x,d,v+[o]]}
-m[0,0,p]}
+o==[y,x]?p: v&[[y, x]]!=[]?1:F[g,w,h,y,x,d,v+[o]]}
 
 describe :X do
   describe 'g 1 (2x2)' do
