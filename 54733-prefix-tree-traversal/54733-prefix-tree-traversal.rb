@@ -6,7 +6,7 @@ gets = "cat[s[up[][]][]ch[e[r[]s[]]]a[maran[]comb[]pult[[]ing[]]]]\n"
 stack = ['']
 weights = [0]
 
-gets.chars.map do |c|
+gets.chars do |c|
   case c
   when ?[
     weights[-1]+=1
