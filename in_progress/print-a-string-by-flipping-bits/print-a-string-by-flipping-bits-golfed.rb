@@ -6,8 +6,7 @@ F=
 q=[]
 w.chars{|c|z=0..7
 *m,i=z.map{|j|z.select{|k|s[k]!=z.map{|i|c.ord[i]}.rotate(j)[k]}+[j]}.min_by &:size
-q+=m.map{|m|s[m]=1-s[m]
-"t #{7-m}"}+["p #{i}"]}
+q+=m.map{|m|s[m]=1-s[m];"t #{7-m}"}+["p #{i}"]}
 puts ["#{q.size} instructions",q]}
 
 
