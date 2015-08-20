@@ -1,11 +1,7 @@
 F=
-->s,l{
-s+=' '*(l-s.size%l)
-(s.size/l).times{|i|
-x=s[i*l...i*l+l]
-puts [x,x.reverse][i%2]    
-}
-}
+->s,l{s+=' '*(l-s.size%l)
+(s.size/l).times{|i|x=s[i*l...i*l+l]
+puts [x,x.reverse][i%2]}}
 
 require 'minitest/autorun'
 
