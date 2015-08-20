@@ -1,11 +1,11 @@
 # pending solution for http://meta.codegolf.stackexchange.com/a/5732/3527
 
 F=
-#217
+#211
 ->w{s=[0]*8
 q=[]
 w.chars{|c|
-m,i=(0..7).map{|j|[(0..7).select{|k|s[k]!=(0..7).map{|i|c.ord[i]}.rotate(j)[k]},j]}.min_by{|x|x[0].size}
+m,i=(z=(0..7)).map{|j|[z.select{|k|s[k]!=z.map{|i|c.ord[i]}.rotate(j)[k]},j]}.min_by{|x|x[0].size}
 q+=m.map{|m|s[m]=1-s[m];"t #{7-m}"}+["p #{i}"]
 }
 puts ["#{q.size} instructions",q]}
