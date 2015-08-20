@@ -1,6 +1,6 @@
 F=
 ->s,l{s+=' '*(l-s.size%l)
-(s.size/l).times{|i|x=s.slice i*l,l
+(s.size/l).times{|i|x=s[i*l,l]
 puts [x,x.reverse][i%2]}}
 
 require 'minitest/autorun'
