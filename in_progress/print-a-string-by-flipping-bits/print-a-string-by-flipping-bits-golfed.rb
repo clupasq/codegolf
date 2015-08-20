@@ -1,13 +1,13 @@
 # pending solution for http://meta.codegolf.stackexchange.com/a/5732/3527
 
 F=
-#205
+#201
 ->w{s=[0]*8
 q=[]
-w.chars{|c|
-*m,i=(z=(0..7)).map{|j|z.select{|k|s[k]!=z.map{|i|c.ord[i]}.rotate(j)[k]}+[j]}.min_by &:size
-q+=m.map{|m|s[m]=1-s[m];"t #{7-m}"}+["p #{i}"]
-}
+w.chars{|c|z=0..7
+*m,i=z.map{|j|z.select{|k|s[k]!=z.map{|i|c.ord[i]}.rotate(j)[k]}+[j]}.min_by &:size
+q+=m.map{|m|s[m]=1-s[m]
+"t #{7-m}"}+["p #{i}"]}
 puts ["#{q.size} instructions",q]}
 
 
