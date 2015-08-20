@@ -1,13 +1,10 @@
 F=
--> str, row_size { 
-  # pad `str` with spaces to the right, until
-  # its length is a multiple of `row_size`
-  str +=' '*(row_size - str.size%row_size)
-
-  (0...str.size/row_size).map do |i|
-    x = str[i*row_size..i*row_size+row_size-1]
-    puts i.odd? ? x.reverse: x
-  end
+->s,l{
+s+=' '*(l-s.size%l)
+(s.size/l).times{|i|
+x=s[i*l...i*l+l]
+puts [x,x.reverse][i%2]    
+}
 }
 
 require 'minitest/autorun'
