@@ -15,7 +15,7 @@ F=
     moves.map{|m|"t #{7-m}"} + ["p #{idx}"]
   end
 
-  puts ["#{instructions.size} instructions", instructions]
+  puts instructions
 }
 
 require 'minitest/autorun'
@@ -25,7 +25,6 @@ describe F do
     @actual = capture_stdout() { F['?'] } 
 
     @expected = <<-EOS
-7 instructions
 t 7
 t 6
 t 5
@@ -40,7 +39,6 @@ EOS
     @actual = capture_stdout() { F[':='] } 
 
     @expected = <<-EOS
-7 instructions
 t 6
 t 4
 t 3
@@ -55,7 +53,6 @@ EOS
     @actual = capture_stdout() { F['0123456789'] } 
 
     @expected = <<-EOS
-26 instructions
 t 3
 t 2
 p 0
@@ -90,7 +87,6 @@ EOS
     @actual = capture_stdout() { F['9876543210'] } 
 
     @expected = <<-EOS
-28 instructions
 t 7
 t 4
 t 3
@@ -126,7 +122,6 @@ EOS
     @actual = capture_stdout() { F['Hello, World!'] } 
 
     @expected = <<-EOS
-39 instructions
 t 4
 t 1
 p 0
@@ -173,7 +168,6 @@ EOS
     @actual = capture_stdout() { F['The quick brown fox jumps over the lazy dog.'] } 
 
     @expected = <<-EOS
-150 instructions
 t 5
 t 3
 t 1
