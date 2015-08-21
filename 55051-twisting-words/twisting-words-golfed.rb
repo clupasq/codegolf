@@ -1,4 +1,5 @@
 F=
+# 80
 ->s,l{s+=' '*(l-s.size%l)
 (s.size/l).times{|i|puts [x=s[i*l,l],x.reverse][i%2]}}
 
