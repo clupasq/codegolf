@@ -15,16 +15,14 @@ F=
     moves.map{|m|"t #{7-m}"} + ["p #{idx}"]
   end
 
-  puts instructions
+  instructions * "\n"
 }
 
 require 'minitest/autorun'
 
 describe F do
   def test_case_1
-    @actual = capture_stdout() { F['?'] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F['?']
 t 7
 t 6
 t 5
@@ -36,9 +34,7 @@ EOS
   end
 
   def test_case_2
-    @actual = capture_stdout() { F[':='] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F[':=']
 t 6
 t 4
 t 3
@@ -50,9 +46,7 @@ EOS
   end
 
   def test_case_3
-    @actual = capture_stdout() { F['0123456789'] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F['0123456789']
 t 3
 t 2
 p 0
@@ -84,9 +78,7 @@ EOS
 
 
   def test_case_4
-    @actual = capture_stdout() { F['9876543210'] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F['9876543210']
 t 7
 t 4
 t 3
@@ -119,9 +111,7 @@ EOS
   end
 
   def test_case_5
-    @actual = capture_stdout() { F['Hello, World!'] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F['Hello, World!']
 t 4
 t 1
 p 0
@@ -165,9 +155,7 @@ EOS
   end
 
   def test_case_6
-    @actual = capture_stdout() { F['The quick brown fox jumps over the lazy dog.'] } 
-
-    @expected = <<-EOS
+    assert_equal <<-EOS.chomp, F['The quick brown fox jumps over the lazy dog.']
 t 5
 t 3
 t 1
@@ -319,28 +307,5 @@ t 4
 t 1
 p 0
 EOS
-  end
-
-
-
-  after do
-    assert_equal @expected, @actual
-  end
-
-end
-
-
-require 'stringio'
-
-module Kernel
-  def capture_stdout(console_input = '')
-    $stdin = StringIO.new(console_input)
-    out = StringIO.new
-    $stdout = out
-    yield
-    return out.string
-  ensure
-    $stdout = STDOUT
-    $stdin = STDIN
   end
 end
