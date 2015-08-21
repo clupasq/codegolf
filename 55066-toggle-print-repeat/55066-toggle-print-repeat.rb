@@ -1,7 +1,3 @@
-require 'minitest/autorun'
-
-# pending solution for http://meta.codegolf.stackexchange.com/a/5732/3527
-
 F=
 -> input {
   state = [0]*8
@@ -15,13 +11,14 @@ F=
       [(0..7).select{|j| state[j] != to_print_shifted[j]}, i]
     }.min_by{|x|x[0].size}
 
-    moves.map {|m| state[m]=1-state[m] }
-    moves.map{|m|"t #{7-m}"}+["p #{idx}"]
+    moves.map{|m| state[m]=1-state[m] }
+    moves.map{|m|"t #{7-m}"} + ["p #{idx}"]
   end
 
   puts ["#{instructions.size} instructions", instructions]
 }
 
+require 'minitest/autorun'
 
 describe F do
   def test_case_1
