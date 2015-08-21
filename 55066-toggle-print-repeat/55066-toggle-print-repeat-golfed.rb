@@ -1,5 +1,3 @@
-# pending solution for http://meta.codegolf.stackexchange.com/a/5732/3527
-
 F=
 #171
 ->w{s=[0]*8
