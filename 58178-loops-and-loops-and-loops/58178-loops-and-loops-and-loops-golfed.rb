@@ -5,13 +5,8 @@ n=Hash.new{|h,k|h[k]=node.new 0}
 y=0
 i.lines{|l|x=0
   l.chars{|c|
-    idxs = [
-      [[y,x-4],[y,x+2]],
-      [[y,x+4],[y,x-2]],
-      [[y-3,x],[y+1,x]],
-      [[y+3,x],[y-1,x]]
-    ]
-    x+=1
+idxs=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]]
+x+=1
 
     i='><v^'.index c
 
