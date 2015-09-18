@@ -1,7 +1,6 @@
 
 F=
-->i{node=Struct.new :incoming_connection_count, :next_node
-n=Hash.new{|h,k|h[k]=node.new 0}
+->i{n=Hash.new{|h,k|h[k]=[0,p]}
 y=0
 i.lines{|l|x=0
   l.chars{|c|
@@ -12,21 +11,20 @@ x+=1
 
     if i
       f,t=idxs[i]
-
-      n[f].next_node=n[t]
-      n[t].incoming_connection_count += 1
+      n[f][1]=n[t]
+      n[t][0]+=1
     end
   }
   y+=1
 }
 
 q=n.values
-c=q.find{|n|n.incoming_connection_count<1}
-s=q.find{|n|n.incoming_connection_count>1}
+c=q.find{|n|n[0]<1}
+s=q.find{|n|n[0]>1}
 
 t=0
 l=n.size
-s ?((t+=1;c=c.next_node)while c!=s):t=l-=1
+s ?((t+=1;c=c[1])while c!=s):t=l-=1
 [t,l-t]
 }
 
