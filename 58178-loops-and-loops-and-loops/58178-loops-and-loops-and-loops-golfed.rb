@@ -29,13 +29,10 @@ q=n.values
 c=q.find{|n|n.incoming_connection_count<1}
 s=q.find{|n|n.incoming_connection_count>1}
 
-unless s
-  [n.size-1, 0]
-else
-  t=0
-  (t+=1;c=c.next_node) while c!=s
-  [t,n.size-t]
-end
+t=0
+l=n.size
+s ?((t+=1;c=c.next_node)while c!=s):t=l-=1
+[t,l-t]
 }
 
 
