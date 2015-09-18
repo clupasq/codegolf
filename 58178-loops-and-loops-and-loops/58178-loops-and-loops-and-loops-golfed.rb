@@ -3,14 +3,12 @@ F=
 ->i{n=Hash.new{|h,k|h[k]=[0,p]}
 y=0
 i.lines{|l|x=0
-  l.chars{|c|
-idxs=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]]
-x+=1
+  l.chars{|c|x+=1
 
     i='><v^'.index c
 
     if i
-      f,t=idxs[i]
+      f,t=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][i]
       n[f][1]=n[t]
       n[t][0]+=1
     end
