@@ -1,16 +1,16 @@
 
 F=
 ->i{n=Hash.new{|h,k|h[k]=[0,p]}
-y=0
+t=y=0
 i.lines{|l|x=0
   l.chars{|c|x+=1
 
     i='><v^'.index c
 
     if i
-      f,t=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][i]
-      n[f][1]=n[t]
-      n[t][0]+=1
+      s,d=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][i]
+      (n[s][1]=n[d])[0]+=1
+      # n[d]
     end
   }
   y+=1
@@ -18,7 +18,6 @@ i.lines{|l|x=0
 
 c,*_,s=n.values.sort_by{|v|v[0]}
 
-t=0
 l=n.size
 s[0]>1?((t+=1;c=c[1])while c!=s):t=l-=1
 [t,l-t]
