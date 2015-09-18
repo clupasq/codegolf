@@ -16,13 +16,11 @@ i.lines{|l|x=0
   y+=1
 }
 
-q=n.values
-c=q.find{|n|n[0]<1}
-s=q.find{|n|n[0]>1}
+c,*_,s=n.values.sort_by{|v|v[0]}
 
 t=0
 l=n.size
-s ?((t+=1;c=c[1])while c!=s):t=l-=1
+s[0]>1?((t+=1;c=c[1])while c!=s):t=l-=1
 [t,l-t]
 }
 
