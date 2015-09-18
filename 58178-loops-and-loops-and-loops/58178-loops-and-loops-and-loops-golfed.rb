@@ -5,8 +5,9 @@ g=->x{n[x]||=[0,p]}
 t=y=0
 i.lines{|l|x=0
 l.chars{|c|x+=1
-q='><v^'.index c
-q&&(s,d=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][q];(g[s][1]=g[d])[0]+=1)}
+'><'[c]&&(r=c.ord-61;s,d=[y,x-4*r],[y,x+2*r])
+'^v'[c]&&(r=c<?_?1:-1;s,d=[y+r*3,x],[y-r,x])
+s&&(g[s][1]=g[d])[0]+=1}
 y+=1}
 c,*_,s=n.values.sort_by{|v|v[0]}
 l=n.size
