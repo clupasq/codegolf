@@ -4,7 +4,7 @@ F=
 '
 node=Struct.new :incoming_connection_count, :next_node
 n=Hash.new{|h,k|h[k]=node.new 0}
-r.size.times{|y|  x=0
+r.size.times{|y|x=0
   r[y].chars{|c|
     case c
     when ?>
@@ -28,15 +28,16 @@ r.size.times{|y|  x=0
   }
 }
 
-c=n.values.find{|n|n.incoming_connection_count < 1}
-s=n.values.find{|n|n.incoming_connection_count > 1}
+q=n.values
+c=q.find{|n|n.incoming_connection_count<1}
+s=q.find{|n|n.incoming_connection_count>1}
 
 unless s
   [n.size-1, 0]
 else
   t=0
   (t+=1;c=c.next_node) while c!=s
-  [t, n.size-t]
+  [t,n.size-t]
 end
 }
 
