@@ -1,11 +1,10 @@
 
 F=
-->i{r=i.split'
-'
-node=Struct.new :incoming_connection_count, :next_node
+->i{node=Struct.new :incoming_connection_count, :next_node
 n=Hash.new{|h,k|h[k]=node.new 0}
-r.size.times{|y|x=0
-  r[y].chars{|c|
+y=0
+i.lines{|l|x=0
+  l.chars{|c|
     idxs = [
       [[y,x-4],[y,x+2]],
       [[y,x+4],[y,x-2]],
@@ -23,6 +22,7 @@ r.size.times{|y|x=0
       n[t].incoming_connection_count += 1
     end
   }
+  y+=1
 }
 
 q=n.values
