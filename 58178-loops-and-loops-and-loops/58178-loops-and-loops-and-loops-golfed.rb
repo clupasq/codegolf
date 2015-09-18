@@ -6,25 +6,22 @@ node=Struct.new :incoming_connection_count, :next_node
 n=Hash.new{|h,k|h[k]=node.new 0}
 r.size.times{|y|x=0
   r[y].chars{|c|
-    case c
-    when ?>
-      f=[y,x-4]
-      t=[y,x+2]
-    when ?<
-      f=[y,x+4]
-      t=[y,x-2]     
-    when ?^
-      f=[y+3,x]
-      t=[y-1,x]
-    when ?v
-      f=[y-3,x]
-      t=[y+1,x]
-    end
-    if f
+    idxs = [
+      [[y,x-4],[y,x+2]],
+      [[y,x+4],[y,x-2]],
+      [[y-3,x],[y+1,x]],
+      [[y+3,x],[y-1,x]]
+    ]
+    x+=1
+
+    i='><v^'.index c
+
+    if i
+      f,t=idxs[i]
+
       n[f].next_node=n[t]
       n[t].incoming_connection_count += 1
     end
-    x+=1
   }
 }
 
