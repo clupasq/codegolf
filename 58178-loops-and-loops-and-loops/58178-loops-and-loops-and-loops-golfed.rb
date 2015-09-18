@@ -1,11 +1,12 @@
 
 F=
-->i{n=Hash.new{|h,k|h[k]=[0,p]}
+->i{n={}
+g=->x{n[x]||=[0,p]}
 t=y=0
 i.lines{|l|x=0
 l.chars{|c|x+=1
 q='><v^'.index c
-q&&(s,d=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][q];(n[s][1]=n[d])[0]+=1)}
+q&&(s,d=[[[y,x-4],[y,x+2]],[[y,x+4],[y,x-2]],[[y-3,x],[y+1,x]],[[y+3,x],[y-1,x]]][q];(g[s][1]=g[d])[0]+=1)}
 y+=1}
 c,*_,s=n.values.sort_by{|v|v[0]}
 l=n.size
