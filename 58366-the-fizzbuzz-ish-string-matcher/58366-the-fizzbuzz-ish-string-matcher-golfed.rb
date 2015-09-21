@@ -1,12 +1,8 @@
 
-F=->s,m{
-  s.chars.chunk{|x|x}.reduce(0){|c,a|
-    l=a[1].size
-    d=[3,5].count{|z|l%z<1}
-
-    c+(a[0]!=m ?0:l<2||d>1?1:d>0?-1:0)
-  }
-}
+F=
+->s,m{s.chars.chunk{|x|x}.reduce(0){|x,(c,g)|l=g.size
+t,f=l%3,l%5
+x+(c!=m ?0:l<2||t+f<1?1:t*f<1?-1:0)}}
 
 require 'minitest/autorun'
 
