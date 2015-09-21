@@ -1,13 +1,11 @@
 
 F=->s,m{
-  y=s.chars.chunk{|x|x}.map{|c,a|
-    l=a.size
+  s.chars.chunk{|x|x}.reduce(0){|c,a|
+    l=a[1].size
     d=[3,5].count{|z|l%z<1}
 
-    c!=m ?0:l<2||d>1?1:d>0?-1:0
+    c+(a[0]!=m ?0:l<2||d>1?1:d>0?-1:0)
   }
-
-  y.reduce(0, :+)
 }
 
 require 'minitest/autorun'
