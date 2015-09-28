@@ -3,9 +3,10 @@ F=
 ->d{o=[]
 c={}
 d=d.sort_by{|w|[w.size,w]}.map{|w|w=w.upcase.gsub /[^A-Z]/,''
-c[w]=1
-w.size.times{|i|p,s=w[0...i],w[i+1..-1]
-c[p+s]&&o<<p+"(#{w[i]})"+s}}
+c[w]=l=1
+w.size.times{|i|p,x,s=w[0...i],w[i],w[i+1..-1]
+c[p+s]&&l!=x&&o<<p+"(#{w[i]})"+s
+l=x}}
 o}
 
 
@@ -41,5 +42,13 @@ describe F do
         'mar', 
         'mat', 
         'ma']]
+  end
+
+  def test_case_3
+    assert_equal [
+        'SCRA(P)PED'], 
+      F[[
+        'scrapped', 
+        'scraped']]
   end
 end

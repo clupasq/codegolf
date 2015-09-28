@@ -3,18 +3,19 @@ F=
 -> dict {
   output = []
   smaller_words = {}
-  dict = dict.sort_by{|word|[word.size, word]}.map{|w|
-    w = w.upcase.gsub /[^A-Z]/, ''
-    smaller_words[w]=1
-    w.size.times{|i|
-      prefix = w[0...i]
-      suffix = w[i+1..-1]
+  dict = dict.sort_by{|word|[word.size, word]}.map do |word|
+    word = word.upcase.gsub /[^A-Z]/, ''
+    smaller_words[word]=l=1
+    word.size.times do |i|
+      prefix = word[0...i]
+      suffix = word[i+1..-1]
 
-      if smaller_words[prefix + suffix]
-        output << "#{prefix}(#{w[i]})#{suffix}"
+      if smaller_words[prefix + suffix] && word[i] != l
+        output << "#{prefix}(#{word[i]})#{suffix}"
       end
-    }
-  }
+      l = word[i]
+    end
+  end
   output
 }
 
@@ -51,5 +52,13 @@ describe F do
         'mar', 
         'mat', 
         'ma']]
+  end
+
+  def test_case_3
+    assert_equal [
+        'SCRA(P)PED'], 
+      F[[
+        'scrapped', 
+        'scraped']]
   end
 end
