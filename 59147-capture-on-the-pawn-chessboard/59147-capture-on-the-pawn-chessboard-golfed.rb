@@ -1,9 +1,9 @@
 IS_CAPTURE_POSSIBLE=
-->board{l={}
-board.split('/').map{|s|c={}
+->b{l={}
+b.split(?/).map{|s|c={}
 i=0
 s.chars.map{|x|n=x.to_i;c[i]=x;i+=n<1?1:n}
-return true if (0..8).any?{ |i| l[i] == 'p' && (c[i-1] == 'P' || c[i+1] == 'P')}
+return true if (0..8).any?{|i|l[i]==?p&&(c[i-1]==?P||c[i+1]==?P)}
 l=c}
 p}
 
