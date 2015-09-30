@@ -1,33 +1,28 @@
 
 def parse_line(s)
-  l = {}
+  r = {}
   i = 0
   s.chars.map{|c|
     case c 
     when '1'..'8'
       i += c.to_i
     else
-      l[i] = c
+      r[i] = c
       i += 1
     end
   }
-
-  l
+  r
 end
 
 IS_CAPTURE_POSSIBLE=
 ->board{
-  last_line = {}
-
-  board.split('/').each do |line_str|
-    line = parse_line line_str
-
-    return true if (0..8).any?{ |i| last_line[i] == 'p' && (line[i-1] == 'P' || line[i+1] == 'P')  }
-
-    last_line = line
-  end
-
-  false
+  l={}
+  board.split('/').map{|s|
+    c=parse_line s
+    return true if (0..8).any?{ |i| l[i] == 'p' && (c[i-1] == 'P' || c[i+1] == 'P')}
+    l=c
+  }
+  p
 }
 
 
