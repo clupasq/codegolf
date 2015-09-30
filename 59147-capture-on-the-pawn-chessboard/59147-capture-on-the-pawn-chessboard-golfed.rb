@@ -1,12 +1,12 @@
 IS_CAPTURE_POSSIBLE=
 ->b{l={}
+r=p
 b.split(?/).map{|s|c={}
 i=0
 s.chars.map{|x|n=x.to_i;c[i]=x;i+=n<1?1:n}
-return true if (0..8).any?{|i|l[i]==?p&&(c[i-1]==?P||c[i+1]==?P)}
+(0..8).map{|i|r||=l[i]==?p&&(c[i-1]==?P||c[i+1]==?P)}
 l=c}
-p}
-
+r}
 
 
 require 'minitest/autorun'
