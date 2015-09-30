@@ -3,8 +3,7 @@ IS_CAPTURE_POSSIBLE=
 r=p
 b.split(?/).map{|s|c={}
 i=0
-s.chars.map{|x|n=x.to_i;c[i]=x;i+=n<1?1:n}
-(0..8).map{|i|r||=l[i]==?p&&(c[i-1]==?P||c[i+1]==?P)}
+s.chars.map{|x|n=x.to_i;c[i]=x;i+=n<1?1:n;x==?P&&r||=l[i-2]==?p||l[i]==?p}
 l=c}
 r}
 
