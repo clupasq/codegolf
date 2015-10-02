@@ -1,47 +1,15 @@
 
-def parse_line(line_str)
-  line = {}
-  i = 0
-  line_str.chars.each do |c|
-    case c 
-    when '1'..'8'
-      i += c.to_i
-    else
-      line[i] = c
-      i += 1
-    end
-  end
-
-  line
-end
-
 def is_capture_possible(board)
-  last_line = {}
+  # expand board
+  board = board.gsub(/\d/){|x|?.*x.to_i}
 
-  board.split('/').each do |line_str|
-    line = parse_line line_str
-
-    return true if (0..8).any?{ |i| last_line[i] == 'p' && (line[i-1] == 'P' || line[i+1] == 'P')  }
-
-    last_line = line
-  end
-
-  false
+  # check if capture possible
+  # (if there are a p and a P with 7 or 9 chars between them)
+  board =~ /p.{7}(..)?P/
 end
-
 
 
 require 'minitest/autorun'
-
-describe :parse_line do
-  it('parses empty lines') { parse_line('8').must_equal({}) }
- 
-  it('recognizes pawns at correct indices') do
-    parse_line('7p').must_equal({ 7 => 'p' })
-    parse_line('2p2P2').must_equal({ 2 => 'p', 5 => 'P' })
-    parse_line('pP1p4').must_equal({ 0 => 'p', 1 => 'P', 3 => 'p' })
-  end
-end
 
 describe :is_capture_possible do
   it('recognizes when capture is possible') do 

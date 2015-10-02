@@ -1,12 +1,5 @@
 IS_CAPTURE_POSSIBLE=
-->b{l={}
-r=p
-b.split(?/).map{|s|c={}
-i=0
-s.chars.map{|x|n=x.to_i;c[i]=x;i+=n<1?1:n;x==?P&&r||=l[i-2]==?p||l[i]==?p}
-l=c}
-r}
-
+->b{b.gsub(/\d/){|x|?.*x.to_i}=~/p.{7}(..)?P/}
 
 require 'minitest/autorun'
 
