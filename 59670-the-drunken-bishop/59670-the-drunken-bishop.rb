@@ -1,35 +1,46 @@
 
-DRUNKEN_BISHOP=->key{
+DRUNKEN_BISHOP=
+->key{
   current_location = 4 * 17 + 8
 
-  board = [0]*17*9
+  get_char_at_pos=->x{
+    middle = 4 * 17 + 8
 
-  key.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2) do |horz, vert|
-    if vert == 0 && current_location > 17
-      current_location -= 17
-    end
-    if vert == 1 && current_location < 17 * 9 - 17
-      current_location += 17
+    return 'S' if x == middle
+
+    current_location = middle
+
+    x_step_count = 0
+
+    key.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2) do |horz, vert|
+      if vert == 0 && current_location > 17
+        current_location -= 17
+      end
+      if vert == 1 && current_location < 17 * 9 - 17
+        current_location += 17
+      end
+
+      if horz == 0 && current_location % 17 > 0
+        current_location -= 1
+      end
+      if horz == 1 && current_location % 17 < 16
+        current_location += 1
+      end
+      
+      x_step_count += 1 if current_location == x
     end
 
-    if horz == 0 && current_location % 17 > 0
-      current_location -= 1
+    if current_location == x
+      return 'E'
+    else
+      return ' .o+=*BOX@%&#/^'[x_step_count]
     end
-    if horz == 1 && current_location % 17 < 16
-      current_location += 1
-    end
-    board[current_location] += 1
-  end
-
-  # mark the start
-  board[4 * 17 + 8] = 15
-
-  # mark the end
-  board[current_location] = 16
+  }
 
   r=[z=?++?-*17+?+]
-  board.each_slice(17).map do |row|
-    r << ?|+row.map{|i|" .o+=*BOX@%&#/^SE"[i]}.join+?|
+
+  (0...17*9).each_slice(17).map do |row|
+    r << ?|+row.map(&get_char_at_pos).join+?|
   end
   (r+[z]).join ?\n
 }
