@@ -5,7 +5,7 @@ r=[z=?++?-*w+?+]
 (0...w*9).each_slice(w).map{|o|r<<?|+o.map{|x|c=76
 q=0
 k.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2){|h,v|v<1?(c>w&&c-=w):c<w*8&&c+=w
-h<1?(c%w>0&&c-=1):c%w<16&&c+=1
+c+=h<1?c%w>0?-1:0:c%w<16?1:0
 c==x&&q+=1}
 x==76?'S':c==x ?'E':' .o+=*BOX@%&#/^'[q]}.join+?|}
 (r+[z]).join'
