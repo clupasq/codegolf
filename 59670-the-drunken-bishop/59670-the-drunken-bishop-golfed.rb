@@ -1,49 +1,26 @@
 
 DRUNKEN_BISHOP=
-->key{
-  current_location = 4 * 17 + 8
+->k{
+w=17
+  g=->x{
 
-  =g->x{
-    middle = 4 * 17 + 8
+if x==c=76
+    return'S'
+else
+q=0
 
-    return 'S' if x == middle
-
-    current_location = middle
-
-    x_step_count = 0
-
-    key.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2) do |horz, vert|
-      if vert == 0 && current_location > 17
-        current_location -= 17
-      end
-      if vert == 1 && current_location < 17 * 9 - 17
-        current_location += 17
-      end
-
-      if horz == 0 && current_location % 17 > 0
-        current_location -= 1
-      end
-      if horz == 1 && current_location % 17 < 16
-        current_location += 1
-      end
-      
-      x_step_count += 1 if current_location == x
-    end
-
-    if current_location == x
-      return 'E'
-    else
-      return ' .o+=*BOX@%&#/^'[x_step_count]
-    end
-  }
-
-  r=[z=?++?-*17+?+]
-
-  (0...17*9).each_slice(17).map do |row|
-    r << ?|+row.map(&g).join+?|
-  end
-  (r+[z]).join ?\n
+k.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2){|h,v|v<1?(c>w&&c-=w):c<w*8&&c+=w
+h<1?(c%w>0&&c-=1):c%w<16&&c+=1
+c==x&&q+=1}
+c==x ?'E':' .o+=*BOX@%&#/^'[q]
+end
 }
+
+
+
+r=[z=?++?-*w+?+]
+(0...w*9).each_slice(w).map{|o|r<<?|+o.map(&g).join+?|}
+(r+[z]).join ?\n}
 
 
 require 'minitest/autorun'

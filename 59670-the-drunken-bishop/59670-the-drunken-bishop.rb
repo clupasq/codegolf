@@ -1,8 +1,6 @@
 
 DRUNKEN_BISHOP=
 ->key{
-  current_location = 4 * 17 + 8
-
   get_char_at_pos=->x{
     middle = 4 * 17 + 8
 
@@ -10,7 +8,7 @@ DRUNKEN_BISHOP=
 
     current_location = middle
 
-    x_step_count = 0
+    step_count_at_location_x = 0
 
     key.split(?:).flat_map{|b|(0..7).map{|i|b.to_i(16)[i]}}.each_slice(2) do |horz, vert|
       if vert == 0 && current_location > 17
@@ -27,13 +25,13 @@ DRUNKEN_BISHOP=
         current_location += 1
       end
       
-      x_step_count += 1 if current_location == x
+      step_count_at_location_x += 1 if current_location == x
     end
 
     if current_location == x
       return 'E'
     else
-      return ' .o+=*BOX@%&#/^'[x_step_count]
+      return ' .o+=*BOX@%&#/^'[step_count_at_location_x]
     end
   }
 
