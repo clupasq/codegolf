@@ -1,9 +1,8 @@
 F=
 ->b{s=->l,w=p{c,*x=l.map &:dup
-n=x[0]
 v=[1,3,3,5,9,0]['PBNRQ'.index(c[y=w||c.index(?L)])||5]
 w&&c[y]=?X
-n ?(m=[]
+(n=x[0])?(m=[]
 n[y]<?.&&m<<s[x,y]
 y<8&&n[y+1]>?-&&m<<s[x,y+1]
 y>0&&n[y-1]>?-&&m<<s[x,y-1]
