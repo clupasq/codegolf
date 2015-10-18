@@ -1,11 +1,8 @@
-# http://codegolf.stackexchange.com/questions/61005/the-black-pawns-revenge
-require 'pp'
-
 F=
 ->b{s=->l,w=p{c,*x=l.map &:dup
 y=w||c.index(?L)
 n=x[0]
-v=(i='PBNRQ'.index c[y])?[1,3,3,5,9][i]:0
+v=[1,3,3,5,9,0]['PBNRQ'.index(c[y])||5]
 w&&c[y]=?X
 n ?(m=[]
 n[y]<?.&&m<<s[x,y]
@@ -67,4 +64,3 @@ EOS
   end
 
 end
-

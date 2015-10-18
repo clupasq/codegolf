@@ -1,6 +1,3 @@
-# http://codegolf.stackexchange.com/questions/61005/the-black-pawns-revenge
-require 'pp'
-
 POINTS = {
   'P' => 1, 
   'B' => 3,
@@ -95,4 +92,3 @@ EOS
   end
 
 end
-
