@@ -10,25 +10,19 @@ POINTS = {
 }
 
 def solve(l,w=p)
-  c,*x=l.map &:dup
-  y=w||c.index(?L)
+c,*x=l.map &:dup
+y=w||c.index(?L)
+n=x[0]
+s=POINTS[c[y]]||0
+w&&c[y]=?X
 
-  n=x[0]
+n ?(m=[]
+n[y]<?.&&m<<solve(x,y)
+y>0&&n[y-1]>?-&&m<<solve(x,y-1)
+y<8&&n[y+1]>?-&&m<<solve(x,y+1)
+b=m.max_by{|m|m&&m[0]||0}
+b&&[b[0]+s,c+b[1]]):[s, c]
 
-  s=POINTS[c[y]]||0
-  w&&c[y]=?X
-
-  unless n
-    return [s, c]
-  end
-
-  m=[]
-  n[y]<?.&&m<<solve(x,y)
-  y>0&&n[y-1]>?-&&m<<solve(x,y-1)
-  y<8&&n[y+1]>?-&&m<<solve(x,y+1)
-
-  b=m.max_by{|m|m&&m[0]||0}
-  b&&[b[0]+s,c+b[1]]
 end
 
 F=
