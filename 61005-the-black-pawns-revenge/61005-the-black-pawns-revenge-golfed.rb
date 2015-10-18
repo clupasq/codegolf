@@ -6,7 +6,7 @@ w&&c[y]=?X
 n[y]<?.&&m<<s[x,y]
 y<8&&n[y+1]>?-&&m<<s[x,y+1]
 y>0&&n[y-1]>?-&&m<<s[x,y-1]
-b=m.max_by{|m|m&&m[0]||0}
+b=m.max_by{|m|m ?m[0]:0}
 b&&[b[0]+v,c+b[1]]):[v, c]}
 s[b.lines][1]}
 
