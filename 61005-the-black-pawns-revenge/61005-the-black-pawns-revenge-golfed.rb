@@ -9,25 +9,24 @@ POINTS = {
   'Q' => 9
 }
 
-def solve(l,w=p)
-c,*x=l.map &:dup
-y=w||c.index(?L)
-n=x[0]
-s=POINTS[c[y]]||0
-w&&c[y]=?X
-
-n ?(m=[]
-n[y]<?.&&m<<solve(x,y)
-y>0&&n[y-1]>?-&&m<<solve(x,y-1)
-y<8&&n[y+1]>?-&&m<<solve(x,y+1)
-b=m.max_by{|m|m&&m[0]||0}
-b&&[b[0]+s,c+b[1]]):[s, c]
-
-end
 
 F=
 ->b{
-  solve(b.lines)[1]
+s=->l,w=p{c,*x=l.map &:dup
+y=w||c.index(?L)
+n=x[0]
+v=POINTS[c[y]]||0
+w&&c[y]=?X
+
+n ?(m=[]
+n[y]<?.&&m<<s[x,y]
+y<8&&n[y+1]>?-&&m<<s[x,y+1]
+y>0&&n[y-1]>?-&&m<<s[x,y-1]
+b=m.max_by{|m|m&&m[0]||0}
+b&&[b[0]+v,c+b[1]]):[v, c]}
+
+
+  s[b.lines][1]
 }
 
 require 'minitest/autorun'
