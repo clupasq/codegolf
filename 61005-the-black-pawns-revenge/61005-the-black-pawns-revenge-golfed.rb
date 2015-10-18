@@ -3,8 +3,7 @@ F=
 v=[1,3,3,5,9,0]['PBNRQ'.index(c[y=w||c.index(?L)])||5]
 w&&c[y]=?X
 (n=x[0])?(m=[]
-n[y]<?.&&m<<s[x,y]
-[y-1,y+1].map{|z|z>=0&&n[z]>?-&&m<<s[x,z]}
+[y-1,y,y+1].map{|z|(z==y)^(n[z]>?.)&&m<<s[x,z]}
 q,r=m.max_by{|m|m ?m[0]:0}
 q&&[q+v,c+r]):[v,c]}
 s[b.lines][1]}
