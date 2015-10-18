@@ -9,36 +9,34 @@ POINTS = {
   'Q' => 9
 }
 
-def solve(lines, crt_pos=p)
-  crt_row, *next_rows = lines.map &:dup
-  pos = crt_pos||crt_row.index(?L)
+def solve(l,w=p)
+  c, *x = l.map &:dup
+  y = w||c.index(?L)
 
-  next_row = next_rows[0]
+  n = x[0]
 
-  points = POINTS[crt_row[pos]]||0
-  crt_row[pos] = ?X if crt_pos
+  s = POINTS[c[y]]||0
+  w&&c[y]=?X
 
-  unless next_row
-    return [points, crt_row]
+  unless n
+    return [s, c]
   end
 
-  next_moves = []
-  next_moves << solve(next_rows, pos) if next_row[pos] == ?-
-  next_moves << solve(next_rows, pos-1) if pos > 0 && next_row[pos-1] > ?-
-  next_moves << solve(next_rows, pos+1) if pos < 8 && next_row[pos+1] > ?-
+  m = []
+  m << solve(x,y) if n[y]==?-
+  m << solve(x,y-1) if y>0&&n[y-1]>?-
+  m << solve(x,y+1) if y<8&&n[y+1]>?-
 
-  # pp next_moves
+  b = m.max_by{ |m| m&&m[0]||0 }
 
-  best_move = next_moves.compact.max_by{ |m| m[0] }
-
-  if best_move
-    return [best_move[0] + points, crt_row + best_move[1]]
+  if b
+    return [b[0] + s, c + b[1]]
   end
 end
 
 F=
-->board{
-  solve(board.lines)[1]
+->b{
+  solve(b.lines)[1]
 }
 
 require 'minitest/autorun'
