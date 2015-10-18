@@ -2,23 +2,18 @@
 require 'pp'
 
 F=
-->b{
-s=->l,w=p{c,*x=l.map &:dup
+->b{s=->l,w=p{c,*x=l.map &:dup
 y=w||c.index(?L)
 n=x[0]
 v=(i='PBNRQ'.index c[y])?[1,3,3,5,9][i]:0
 w&&c[y]=?X
-
 n ?(m=[]
 n[y]<?.&&m<<s[x,y]
 y<8&&n[y+1]>?-&&m<<s[x,y+1]
 y>0&&n[y-1]>?-&&m<<s[x,y-1]
 b=m.max_by{|m|m&&m[0]||0}
 b&&[b[0]+v,c+b[1]]):[v, c]}
-
-
-  s[b.lines][1]
-}
+s[b.lines][1]}
 
 require 'minitest/autorun'
 
