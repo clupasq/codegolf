@@ -1,21 +1,12 @@
 # http://codegolf.stackexchange.com/questions/61005/the-black-pawns-revenge
 require 'pp'
 
-POINTS = {
-  'P' => 1, 
-  'B' => 3,
-  'N' => 3,
-  'R' => 5,
-  'Q' => 9
-}
-
-
 F=
 ->b{
 s=->l,w=p{c,*x=l.map &:dup
 y=w||c.index(?L)
 n=x[0]
-v=POINTS[c[y]]||0
+v=(i='PBNRQ'.index c[y])?[1,3,3,5,9][i]:0
 w&&c[y]=?X
 
 n ?(m=[]
