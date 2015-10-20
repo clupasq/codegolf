@@ -1,34 +1,18 @@
 
 def program
 
-  target_row_size, *text = $<.to_a
+s=gets.to_i
+w=$<.read.split
+c=[]
+(n=w.shift
+c.any?&&((c+[n])*?.).size>s&&(t=d=''
+(t<<d;z=c.size*1.0;t<<' '*(z<1?0:((s-t.size-c.join.size)/z).ceil))while d=c.shift
+puts t)
+c<<n)while w!=[]
+puts c*' '
 
-  target_row_size = target_row_size.to_i
-  words = text.join.scan /\S+/
-
-  current_row = []
-
-  while words.any?
-    next_word = words.shift
-
-    if current_row.any? && (current_row + [next_word]).join(?.).size > target_row_size
-      # print current_row using the right amounts of spaces
-
-      to_print = ''
-      while word = current_row.shift
-        to_print << word
-        break_size = current_row.size > 0 ? ((target_row_size - to_print.size - current_row.join.size) / current_row.size.to_f).ceil : 0
-        to_print << ' ' * break_size
-      end
-      puts to_print
-      
-    end
-
-    current_row << next_word
-  end
-
-  puts current_row.join ' '
 end
+
 
 
 require 'minitest/autorun'
