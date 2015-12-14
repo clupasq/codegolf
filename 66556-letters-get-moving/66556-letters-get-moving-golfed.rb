@@ -1,7 +1,7 @@
 # rubocop: disable all
 require 'minitest/autorun'
 
-#143
+#152
 
 F=
 ->s{a=s.chars.map{|c|[c,c=~/[a-z]/i&&c.upcase.ord-64]}
@@ -11,7 +11,6 @@ c,s=a.delete_at i
 n=(i+s)%z
 a.insert(n,[c,p])
 end
-
 a.join}
 
 describe :MovingLetters do
