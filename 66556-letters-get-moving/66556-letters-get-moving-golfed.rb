@@ -4,7 +4,7 @@ require 'minitest/autorun'
 def move(s)
 a=s.chars.map{|c|[c,c=~/[a-z]/i&&c.upcase.ord-64]}
 
-while i=a.find_index{|c|c[1]}
+while i=a.index{|c|c[1]}
 c=a.delete_at i
 n=(i+c[1])%(a.size+1)
 c[1]=p
