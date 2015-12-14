@@ -8,7 +8,7 @@ F=
 z=a.size
 while i=a.index{|c,s|s}
 c,s=a.delete_at i
-a.insert (i+s)%z,[c,p]
+a.insert (i+s)%z,[c,]
 end
 a.join}
 
