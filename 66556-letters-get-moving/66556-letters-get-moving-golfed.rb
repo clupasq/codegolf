@@ -1,15 +1,14 @@
 # rubocop: disable all
 require 'minitest/autorun'
 
-#152
+#146
 
 F=
 ->s{a=s.chars.map{|c|[c,c=~/[a-z]/i&&c.upcase.ord-64]}
 z=a.size
 while i=a.index{|c,s|s}
 c,s=a.delete_at i
-n=(i+s)%z
-a.insert(n,[c,p])
+a.insert (i+s)%z,[c,p]
 end
 a.join}
 
