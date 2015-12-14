@@ -1,7 +1,7 @@
 # rubocop: disable all
 require 'minitest/autorun'
 
-#132
+#130
 
 F=
 ->q{a=q.chars.map{|c|[c,c=~/[a-z]/i&&c.ord%32]}
@@ -9,7 +9,7 @@ while i=a.index{|c,s|s}
 c,s=a.delete_at i
 a.insert (i+s)%q.size,[c]
 end
-a.join}
+a*''}
 
 describe :MovingLetters do
   def test_case_1
