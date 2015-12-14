@@ -1,7 +1,7 @@
 # rubocop: disable all
 require 'minitest/autorun'
 
-#130
+#125
 
 F=
 ->q{a=q.chars.map{|c|[c,c=~/[a-z]/i&&c.ord%32]}
