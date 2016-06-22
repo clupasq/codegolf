@@ -4,32 +4,16 @@ require_relative '../test_utils'
 def parse_fat
 #--------------
 m=gets
-o=[]
-
 s=->b,l{b.slice!(0,l).to_i 2}
-
 t=->b{'%02d:%02d:%02d %d/%d/%d'%[s[b,5],s[b,6],2*s[b,5],s[b,7]+1980,s[b,4],s[b,5],]}
-
-i=(0..32).map{|i|m[i*8,8].to_i(2)}
-
+i=(0..32).map{|i|m[i*8,8].to_i 2}
 c=i.map(&:chr).join
-
 n=c[0,8].strip
 e=c[8,3].strip
-
 e>?!&&n<<?.+e
-o<<n
-
 f=''
 6.times{|j|i[11][j]>0&&f<<%w(RO H S VL SD A)[j]}
-o<<f
-
-o<<t[m[112,99]]
-o<<t[m[176,99]]
-
-o<<(f[/VL|SD/]?0:m[-32..-1].to_i(2)).to_s
-
-$><<o*' '
+$><<[n,f,t[m[112,99]],t[m[176,99]],(f[/VL|SD/]?0:m[-32..-1].to_i(2))]*' '
 #--------------
 end
 
