@@ -63,11 +63,11 @@ def print_size_stats(meth)
 
   return if size_log.size == 1
 
-  puts 'Latest history:'
+  puts 'Latest size history:'
   latest_history = size_log.last 10
 
   latest_history.each do |old_size|
-    puts '%7d  => %s' %
+    puts '%7d  =>  %8s' %
       [old_size, number_diff(current_size, old_size)]
   end
 end
