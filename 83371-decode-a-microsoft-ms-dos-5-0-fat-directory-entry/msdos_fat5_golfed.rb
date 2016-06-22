@@ -4,7 +4,7 @@ require_relative '../test_utils'
 def parse_fat
 
 m=gets
-output=[]
+o=[]
 
 s=->b,l{b.slice!(0,l).to_i 2}
 
@@ -12,29 +12,24 @@ t=->b{'%02d:%02d:%02d %d/%d/%d'%[s[b,5],s[b,6],2*s[b,5],s[b,7]+1980,s[b,4],s[b,5
 
 i=(0..32).map{|i|m[i*8,8].to_i(2)}
 
-z=i.map(&:chr).join
+c=i.map(&:chr).join
 
-n=z[0,8].strip
-e=z[8,3].strip
+n=c[0,8].strip
+e=c[8,3].strip
 
-n<<?.+e if e>?!
-output<<n
+e>?!&&n<<?.+e
+o<<n
 
-flag_byte=i[11]
-flag_positions=%w(RO H S VL SD A)
+f=''
+6.times{|j|i[11][j]>0&&f<<%w(RO H S VL SD A)[j]}
+o<<f
 
-flags=''
-6.times{|i|flags<<flag_positions[i]if flag_byte[i]>0}
-output<<flags
+o<<t[m[8*0x0e,99]]
+o<<t[m[8*0x16,99]]
 
-output<<t[m[8*0x0e,99]]
-output<<t[m[8*0x16,99]]
+o<<(f[/VL|SD/]?0:m[-32..-1].to_i(2)).to_s
 
-not_file=flags[/VL|SD/]
-size=not_file ?0:m[-32..-1].to_i(2)
-output<<size.to_s
-
-$><<output*' '
+$><<o*' '
 
 end
 
