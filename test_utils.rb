@@ -23,6 +23,7 @@ def get_method_length(meth)
   source_lines = meth.source.split("\n")
   countable_source = source_lines[1..-2]
     .reject { |l| l =~ /^\s*$/ }
+    .reject { |l| l =~ /^\s*#/ }
     .join "\n"
   countable_source.bytesize
 end

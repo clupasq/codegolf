@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require_relative '../test_utils'
 
 def parse_fat
-
+#--------------
 m=gets
 o=[]
 
@@ -24,13 +24,13 @@ f=''
 6.times{|j|i[11][j]>0&&f<<%w(RO H S VL SD A)[j]}
 o<<f
 
-o<<t[m[8*0x0e,99]]
-o<<t[m[8*0x16,99]]
+o<<t[m[112,99]]
+o<<t[m[176,99]]
 
 o<<(f[/VL|SD/]?0:m[-32..-1].to_i(2)).to_s
 
 $><<o*' '
-
+#--------------
 end
 
 describe 'msdos_fat_parser' do
