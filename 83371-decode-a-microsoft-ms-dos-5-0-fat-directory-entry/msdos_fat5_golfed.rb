@@ -32,11 +32,24 @@ describe 'msdos_fat_parser' do
   end
 
   def call_parse_fat(bit_string)
-    output = capture_stdout(bit_string){ parse_fat }
-    output.string
+    capture_stdout(bit_string){ parse_fat }
   end
 end
 
+# capture STDIN/STDOUT for testing purposes
+require 'stringio'
+module Kernel
+  def capture_stdout(console_input = '')
+    $stdin = StringIO.new(console_input)
+    out = StringIO.new
+    $stdout = out
+    yield
+    return out.string.chomp
+  ensure
+    $stdout = STDOUT
+    $stdin = STDIN
+  end
+end
 
 print_size_stats :parse_fat
 puts

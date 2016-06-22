@@ -13,23 +13,23 @@ describe PROGRAM do
   end
 
   def test_case_2
-    assert_equal 'bbb', execute('a0b3')   
+    assert_equal 'bbb', execute('a0b3')
   end
 
   def test_case_3
-    assert_equal '111b', execute('13b1')   
+    assert_equal '111b', execute('13b1')
   end
 
   def test_case_4
-    assert_equal 'aaa111b', execute('a13b1')   
+    assert_equal 'aaa111b', execute('a13b1')
   end
 
   def test_case_5
-    assert_equal 'aaa111222b', execute('a123b1')   
+    assert_equal 'aaa111222b', execute('a123b1')
   end
 
   def test_case_6
-    assert_equal 'aaaaab', execute('aa2a1b1')   
+    assert_equal 'aaaaab', execute('aa2a1b1')
   end
 
 
