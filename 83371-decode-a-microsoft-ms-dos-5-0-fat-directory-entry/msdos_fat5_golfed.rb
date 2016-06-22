@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require_relative '../test_utils'
 
-PARSE_FAT =-> {
+def parse_fat
   m = gets
   output = []
 
@@ -46,25 +46,30 @@ PARSE_FAT =-> {
   output<< size.to_s
 
   $><< output.join(' ')
-}
+end
 
 describe 'msdos_fat_parser' do
   it 'can parse files' do
     file_descriptor = '0111000001110010011011110110011101110010011000010110110101101101011010010110111001100111000001100000000000000000101000100100010001001000110101000000000000000000000000000000000010100010010001000100100011010100000000000000000000000000000000001101000000000000'
     expected = 'programm.ing HS 20:18:08 2016/6/20 20:18:08 2016/6/20 53248'
-    assert_equal expected, parse_fat(file_descriptor)
+    assert_equal expected, call_parse_fat(file_descriptor)
   end
 
   it 'can parse non-files' do
     file_descriptor = '0010000000100000001000000010000001110000011100000110001101100111001000000010000000100000000101000000000000000000010111010110110000111101100111110000000000000000000000000000000010100010010001000100100011010100000000000000000011110000000100111111001011100001'
 
     expected = 'ppcg SSD 11:43:24 2010/12/31 20:18:08 2016/6/20 0'
-    assert_equal expected, parse_fat(file_descriptor)
+    assert_equal expected, call_parse_fat(file_descriptor)
   end
 
-  def parse_fat(bit_string)
-    output = capture_stdout(bit_string){ PARSE_FAT[] }
+  def call_parse_fat(bit_string)
+    output = capture_stdout(bit_string){ parse_fat }
     output.string
   end
 end
+
+
+#puts "The code length is currently: #{get_method_length(:parse_fat)}"
+print_size_stats :parse_fat
+puts
 
