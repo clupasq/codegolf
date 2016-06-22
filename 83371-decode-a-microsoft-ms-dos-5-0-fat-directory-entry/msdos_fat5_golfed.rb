@@ -6,37 +6,29 @@ def parse_fat
 m=gets
 output=[]
 
-slice_to_int=->bits,length{bits.slice!(0,length).to_i 2}
+s=->b,l{b.slice!(0,l).to_i 2}
 
-time=->bits{hour=slice_to_int[bits,5]
-minute=slice_to_int[bits,6]
-second=2*slice_to_int[bits,5]
+t=->b{'%02d:%02d:%02d %d/%d/%d'%[s[b,5],s[b,6],2*s[b,5],s[b,7]+1980,s[b,4],s[b,5],]}
 
-year=slice_to_int[bits,7]+1980
-month=slice_to_int[bits,4]
-day=slice_to_int[bits,5]
-'%02d:%02d:%02d %d/%d/%d'%[hour,minute,second,year,month,day]
-}
+i=(0..32).map{|i|m[i*8,8].to_i(2)}
 
-ints=(0..32).map{|i|m[i*8,8].to_i(2)}
+z=i.map(&:chr).join
 
-str=ints.map(&:chr).join
+n=z[0,8].strip
+e=z[8,3].strip
 
-name=str[0,8].strip
-ext=str[8,3].strip
+n<<?.+e if e>?!
+output<<n
 
-name<<?.+ext if ext>?!
-output<<name
-
-flag_byte=ints[11]
+flag_byte=i[11]
 flag_positions=%w(RO H S VL SD A)
 
 flags=''
 6.times{|i|flags<<flag_positions[i]if flag_byte[i]>0}
 output<<flags
 
-output<<time[m[8*0x0e,99]]
-output<<time[m[8*0x16,99]]
+output<<t[m[8*0x0e,99]]
+output<<t[m[8*0x16,99]]
 
 not_file=flags[/VL|SD/]
 size=not_file ?0:m[-32..-1].to_i(2)
@@ -67,7 +59,6 @@ describe 'msdos_fat_parser' do
 end
 
 
-#puts "The code length is currently: #{get_method_length(:parse_fat)}"
 print_size_stats :parse_fat
 puts
 
