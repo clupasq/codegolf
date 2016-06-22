@@ -6,14 +6,14 @@ def parse_fat
 m=gets
 s=->b,l{b.slice!(0,l).to_i 2}
 t=->b{'%02d:%02d:%02d %d/%d/%d'%[s[b,5],s[b,6],2*s[b,5],s[b,7]+1980,s[b,4],s[b,5],]}
-i=(0..32).map{|i|m[i*8,8].to_i 2}
+i=(0..q=32).map{|i|m[i*8,8].to_i 2}
 c=i.map(&:chr).join
 n=c[0,8].strip
 e=c[8,3].strip
 e>?!&&n<<?.+e
 f=''
 6.times{|j|i[11][j]>0&&f<<%w(RO H S VL SD A)[j]}
-$><<[n,f,t[m[112,99]],t[m[176,99]],(f[/VL|SD/]?0:m[-32..-1].to_i(2))]*' '
+$><<[n,f,t[m[112,q]],t[m[176,q]],(f[/VL|SD/]?0:m[-q,q].to_i(2))]*' '
 #--------------
 end
 
