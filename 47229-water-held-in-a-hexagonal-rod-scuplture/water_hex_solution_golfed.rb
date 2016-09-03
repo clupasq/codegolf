@@ -2,7 +2,7 @@
 require 'minitest/autorun'
 
 # The program is wrapped in a function, in order for it to be testable.
-# `ii` is used instead of `$<` 
+# `ii` is used instead of `$<`
 # (`$<` cannot be mocked in tests and `ii` is also 2 chars long)
 f=->ii{
 # -- program begin --
@@ -10,7 +10,7 @@ s={}
 l=ii.lines
 y=0
 l.map{|r|x=0
-r.scan(/../).map{|v|s[[x,y]]=[v=v.to_i,v<1?0:99];x+=1}
+r.scan(/../){s[[x,y]]=[v=$&.to_i,v<1?0:99];x+=1}
 y+=1}
 loop{break if s.map{|c,r|x,y=c
 m = [[-1,-1],[1,-1],[-2,0],[2,0],[1,-1],[1,1]].map{|w,z|s[[x+w,y+z]]}.map{|n|n ?n[0]+n[1]:0}.min
@@ -31,7 +31,7 @@ describe '#f' do
 04  01  03
   04  04
 EOS
-    
+
     assert_equal 2, f[i]
   end
 
