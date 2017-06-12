@@ -2,15 +2,14 @@ require 'minitest/autorun'
 require_relative '../test_utils'
 
 def fmt m,t
-#--------------
   j=->(l,t){
-    n=t.delete(' ').size
+    n=t.delete(b=' ').size
     c=t.split.size-1
-    x,y=t.split ' ',2
-    return x if c<1
+    x,y=t.split b,2
+    c<1?x:(
     w=((l.to_f-n)/c).ceil
-    d=x+' '*w
-    d+j[l-d.size,y]
+    d=x+b*w
+    d+j[l-d.size,y])
   }
   w=t.split /(-| )/
   l=[]
@@ -27,7 +26,6 @@ def fmt m,t
     end
   end
   l<<c
-#--------------
 end
 
 
