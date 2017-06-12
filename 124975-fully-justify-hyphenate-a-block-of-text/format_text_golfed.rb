@@ -1,43 +1,37 @@
 require 'minitest/autorun'
 require_relative '../test_utils'
 
-def justify length, text
-  non_whitespace = text.delete(' ').size
-  word_count = text.split.size-1
-  pre, suf = text.split(' ',2)
-  return pre if word_count<1
-  whitespace_width = ((length.to_f - non_whitespace)/word_count).ceil
-  crt = pre + ' '*whitespace_width
-  crt+justify(length-crt.size, suf)
-end
-
-def fmt max_length, text
-  words = text.split /(-| )/
-  lines=[]
-  crtline=""
-  while words.any?
-    crt, sep = words.shift 2
-
-    newcrtline = crtline.dup.chomp(?-) + crt + (sep||"")
-
-    if newcrtline.strip.size > max_length
-      lines << justify(max_length, crtline)
-      crtline = ""
-      words.unshift crt,sep
+def fmt x,t
+#--------------
+  def j l, t
+    n=t.delete(' ').size
+    c=t.split.size-1
+    x,y=t.split ' ',2
+    return x if c<1
+    whitespace_width=((l.to_f-n)/c).ceil
+    d=x+' '*whitespace_width
+    d+j(l-d.size,y)
+  end
+  w=t.split /(-| )/
+  l=[]
+  c=""
+  while w.any?
+    d,s=w.shift 2
+    n=c.dup.chomp(?-)+d+(s||"")
+    if n.strip.size>x
+      l<<j(x,c)
+      c=""
+      w.unshift d,s
     else
-      crtline = newcrtline
+      c=n
     end
   end
-  lines<<crtline
+  l<<c
+#--------------
 end
 
 
 describe :Justification do
-
-  it "can justify line" do
-    assert_equal justify(10, "It's the"), "It's   the"
-    assert_equal justify(20, "network of Q&A"), "network    of    Q&A"
-  end
 
   describe "splits to fit into lines" do
 
@@ -105,4 +99,6 @@ describe :Justification do
   end
 end
 
+
+print_size_stats :fmt
 
