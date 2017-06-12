@@ -1,25 +1,25 @@
 require 'minitest/autorun'
 require_relative '../test_utils'
 
-def fmt x,t
+def fmt m,t
 #--------------
-  def j l, t
+  j=->(l,t){
     n=t.delete(' ').size
     c=t.split.size-1
     x,y=t.split ' ',2
     return x if c<1
-    whitespace_width=((l.to_f-n)/c).ceil
-    d=x+' '*whitespace_width
-    d+j(l-d.size,y)
-  end
+    w=((l.to_f-n)/c).ceil
+    d=x+' '*w
+    d+j[l-d.size,y]
+  }
   w=t.split /(-| )/
   l=[]
   c=""
   while w.any?
     d,s=w.shift 2
     n=c.dup.chomp(?-)+d+(s||"")
-    if n.strip.size>x
-      l<<j(x,c)
+    if n.strip.size>m
+      l<<j[m,c]
       c=""
       w.unshift d,s
     else
