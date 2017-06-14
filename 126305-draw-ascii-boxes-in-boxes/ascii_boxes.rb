@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require_relative '../test_utils'
 
+# --- {START COUNTING}
 f = ->(a,b,c){
   g = a.times.map{?#*a}
 
@@ -21,6 +22,7 @@ f = ->(a,b,c){
   g
 }
 
+# --- {END COUNTING}
 
 describe :AsciiBoxes do
 
@@ -53,5 +55,7 @@ EOS
 
 end
 
-# print_size_stats :fmt
+print_size_stats
+
+
 

@@ -51,6 +51,6 @@ module Kernel
   end
 end
 
-print_size_stats :parse_fat
+print_size_stats_for_method :parse_fat
 puts
 

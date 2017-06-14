@@ -22,10 +22,15 @@ def get_method_length(meth)
   meth = get_method(meth)
   source_lines = meth.source.split("\n")
   countable_source = source_lines[1..-2]
+  get_length countable_source
+end
+
+def get_length(source_lines)
+  non_empty_lines = source_lines
     .reject { |l| l =~ /^\s*$/ }
     .reject { |l| l =~ /^\s*#/ }
     .join "\n"
-  countable_source.bytesize
+  non_empty_lines.bytesize
 end
 
 def number_diff(a, b)
@@ -39,14 +44,25 @@ def number_diff(a, b)
   end
 end
 
-def print_size_stats(meth)
-  meth = get_method(meth)
-
-  file, line = caller
+def print_size_stats
+  source_file = caller_locations.first.absolute_path
+  source_lines = File.readlines(source_file)
+    .drop_while { |l| not /START COUNTING/ =~ l }
+    .drop(1)
+    .take_while { |l| not /END COUNTING/ =~ l }
+  current_size = get_length source_lines
   size_log_file = "#{caller_locations.first.absolute_path}.size_log"
+  print_stats current_size, size_log_file
+end
 
+def print_size_stats_for_method(meth)
+  meth = get_method(meth)
   current_size = get_method_length(meth)
+  size_log_file = "#{caller_locations.first.absolute_path}.size_log"
+  print_stats current_size, size_log_file
+end
 
+def print_stats current_size, size_log_file
   size_log = File.read(size_log_file).lines.map(&:to_i) rescue []
 
   if (size_log.last || -1) != current_size

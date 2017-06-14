@@ -91,5 +91,5 @@ describe :Justification do
 end
 
 
-print_size_stats :fmt
+print_size_stats_for_method :fmt
 
