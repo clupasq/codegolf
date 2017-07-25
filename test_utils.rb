@@ -44,14 +44,14 @@ def number_diff(a, b)
   end
 end
 
-def print_size_stats
-  source_file = caller_locations.first.absolute_path
+def print_size_stats(source_file=nil)
+  source_file = source_file || caller_locations.first.absolute_path
   source_lines = File.readlines(source_file)
     .drop_while { |l| not /START COUNTING/ =~ l }
     .drop(1)
     .take_while { |l| not /END COUNTING/ =~ l }
   current_size = get_length source_lines
-  size_log_file = "#{caller_locations.first.absolute_path}.size_log"
+  size_log_file = "#{source_file}.size_log"
   print_stats current_size, size_log_file
 end
 
