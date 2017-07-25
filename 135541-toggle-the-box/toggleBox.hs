@@ -4,7 +4,7 @@ middle :: [a] -> [a]
 middle (x:xs) = init xs
 
 applyStartMiddleEnd :: (a -> b) -> (a -> b) -> [a] -> [b]
-applyStartMiddleEnd b m (x:xs) = b x : map m(init xs) ++ [b$last xs]
+applyStartMiddleEnd startEndFunction middleFunction (x:xs) = startEndFunction x : map middleFunction(init xs) ++ [startEndFunction$last xs]
 
 topBottomLine :: String -> String
 topBottomLine = applyStartMiddleEnd (\_->'+') (\_->'-')
@@ -30,6 +30,9 @@ unbox = (map middle).middle
 box :: [String] -> [String]
 box [] = t:[t] where t=topBottomLine "xx"
 box xs = wrap (topBottomLine $ wrapMiddle$head xs) $ map wrapMiddle xs
+
+toggle :: [String] -> [String]
+toggle xs = if hasBox xs then unbox xs else box xs
 
 main = hspec $ do
 
@@ -126,6 +129,59 @@ main = hspec $ do
         box [] `shouldBe` ["++",
                               "++"]
 
+
+    it "Passes test cases" $ do
+      toggle ["Hello, World!"] `shouldBe`
+        ["+-------------+",
+        "|Hello, World!|",
+        "+-------------+"]
+
+      toggle ["Hello,    ",
+              "    World!"] `shouldBe`
+          ["+----------+",
+          "|Hello,    |",
+          "|    World!|",
+          "+----------+"]
+
+
+      toggle ["+--------+",
+              "|        |",
+              " --------+"] `shouldBe`
+            ["+----------+",
+            "|+--------+|",
+            "||        ||",
+            "| --------+|",
+            "+----------+"]
+
+      toggle ["++",
+              "++"] `shouldBe` []
+
+
+      toggle ["+----+",
+              "+----+"] `shouldBe` []
+
+      toggle["++",
+             "||",
+             "||",
+             "++"] `shouldBe` ["", ""]
+
+      toggle ["+-------+",
+              "| Hello |",
+              "+ ------+"] `shouldBe`
+            ["+---------+",
+             "|+-------+|",
+             "|| Hello ||",
+             "|+ ------+|",
+             "+---------+"]
+
+      toggle [" +-------+",
+              "a| Hello |",
+              " +-------+"] `shouldBe`
+            ["+----------+",
+             "| +-------+|",
+             "|a| Hello ||",
+             "| +-------+|",
+             "+----------+"]
 
 
 
