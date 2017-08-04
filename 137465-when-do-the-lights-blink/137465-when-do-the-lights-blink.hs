@@ -7,8 +7,8 @@ type Time = Int
 type State = Bool
 type LightEvent = (Time, LightId, State)
 
-light :: Time -> Time -> [(Time, State)]
-light delay interval = iterate step (delay, True)
+lightSimulation :: Time -> Time -> [(Time, State)]
+lightSimulation delay interval = iterate step (delay, True)
   where step (time, state) = (time+interval, not state)
 
 addId :: LightId -> (Time, State) -> LightEvent
@@ -16,7 +16,8 @@ addId id (t, s) = (t, id, s)
 
 simulate :: Time -> [(Time, Time)] -> [LightEvent]
 simulate timeLimit lights = sort $ concatMap lightSim (zip [0..] lights)
-  where lightSim (id, (delay, interval)) = map (addId id) $ takeWhile ((<=timeLimit) . fst) (light delay interval)
+  where withinTimeLimit = ((<=timeLimit) . fst)
+        lightSims (id, (delay, interval)) = map (addId id) $ takeWhile withinTimeLimit (lightSimulation delay interval)
 
 
 main = hspec $ do

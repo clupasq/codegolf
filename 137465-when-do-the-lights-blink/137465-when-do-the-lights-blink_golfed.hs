@@ -1,16 +1,8 @@
 import Test.Hspec
--- import Data.Ord
 
--- light::(Int,(Int,Int))->[(Int,Int,Bool)]
--- simulate :: Int -> [(Int, Int)] -> [(Int,Int,Bool)]
 -- START COUNTING
 import Data.List
-
-light (i,(d,w)) = iterate step (d, i, True)
-  where step (t, i, state) = (t+w, i, not state)
-
-timeLimit!lights = sort $ concatMap lightSim (zip [0..] lights)
-  where lightSim l = takeWhile(\(a,b,c)->a<=timeLimit)$light l
+t!l=sort$(zip[0..]l)>>=takeWhile(\(a,_,_)->a<=t).(\(i,(d,w))->iterate(\(t,i,s)->(t+w,i,not s))(d,i,2>1))
 -- END COUNTING
 
 
