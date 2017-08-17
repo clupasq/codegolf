@@ -9,20 +9,12 @@ import Data.List
 import Debug.Trace
 
 -- START COUNTING
-binary 0=""
-binary n|(d,r)<-divMod n 2=binary d++["01"!!r]
-
-substrings xs = nub$inits xs>>=tails
-
-properSubstrings xs = substrings xs\\[xs]
-
-sb=substrings.binary
-psb=properSubstrings.binary
-
-g = scanl step (1,[]) [1..]
-  where step (_,l) x | psb x\\l/=[]=(x,l++sb x)
-                     | otherwise=(0,l)
-
+b 0=""
+b n=b(n`div`2)++(show$n`mod`2)
+s=nub.(tails=<<).inits
+p x=s x\\[x]
+n(_,l)x|(p.b)x\\l/=[]=(x,l++(s.b)x)|1<2=(0,l)
+g=scanl n(1,[])[1..]
 f=filter(>1)$fst<$>g
 --END COUNTING
 
