@@ -8,14 +8,12 @@ import Data.List
 --
 import Debug.Trace
 
-binary :: Int -> String
+-- START COUNTING
 binary 0=""
 binary n|(d,r)<-divMod n 2=binary d++["01"!!r]
 
-substrings :: String -> [String]
 substrings xs = nub$inits xs>>=tails
 
-properSubstrings :: String -> [String]
 properSubstrings xs = substrings xs\\[xs]
 
 sb=substrings.binary
@@ -26,6 +24,7 @@ g = scanl step (1,[]) [1..]
                      | otherwise=(0,l)
 
 f=filter(>1)$fst<$>g
+--END COUNTING
 
 
 main = hspec $ do

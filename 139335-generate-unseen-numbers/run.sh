@@ -2,7 +2,7 @@
 
 # set -e
 
-FILE="139335-generate-unseen-numbers.hs"
+FILE="139335-generate-unseen-numbers.golfed.hs"
 
 while true; do
   inotifywait -e MODIFY $FILE
