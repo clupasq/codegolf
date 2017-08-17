@@ -4,11 +4,11 @@ import Test.QuickCheck.Modifiers(NonEmptyList (..))
 
 -- import Data.Ord
 import Data.Char
-import Data.List
 --
 import Debug.Trace
 
 -- START COUNTING
+import Data.List
 b 0=""
 b n=b(n`div`2)++(show$n`mod`2)
 s=nub.(tails=<<).inits
